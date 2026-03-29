@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --deep-navy: #050A15;
     --midnight-blue: #0A0F1E;
     --warm-gold: #C9A84C;   /* 22K Muted Gold */
@@ -109,20 +109,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .brand-logo {
-    height: 44px !important;
-    width: 44px !important;
+    height: 48px !important;
+    width: 48px !important;
     aspect-ratio: 1 / 1;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
     border-radius: 50%;
-    background: #FAF6EF; /* Cream background */
-    padding: 4px;
+    background: #0A1B6B; /* Deep royal blue fallback */
+    padding: 0;
     transition: transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(201, 168, 76, 0.5);
     display: block;
 }
 
 .brand-logo:hover {
     transform: scale(1.08) rotate(5deg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(212, 175, 55, 0.9);
 }
 
 .nav-center {
