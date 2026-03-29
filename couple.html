@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matching Collections | Gayatri Jewellers</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="collection-page" data-category="couple">
     <nav class="navbar scrolled" id="navbar"><div class="nav-left"><a href="index.html" class="logo"><img src="logo.no.bg.png" alt="Gayatri Jewellers" style="height: 50px;"><span class="brand-name">Gayatri <span style="color: var(--warm-gold);">Jewellers</span></span></a></div><div class="nav-center"><a href="index.html" class="nav-link">Home</a> <a href="men.html" class="nav-link">Men</a> <a href="wedding.html" class="nav-link">Wedding</a> <a href="couple.html" class="nav-link active">Couple</a> <a href="women.html" class="nav-link">Women</a> <a href="all-collections.html" class="nav-link">All</a></div><div class="nav-right"><button class="icon-btn" id="search-trigger"><i class="ph ph-magnifying-glass"></i></button><button class="icon-btn wishlist-btn" id="wishlist-trigger"><i class="ph ph-heart"></i><span class="badge" id="wishlist-badge">0</span></button><button class="icon-btn" id="profile-trigger"><i class="ph ph-user"></i></button></div></nav>
     <header class="collection-hero-v2"><div class="collection-hero-bg" style="background-image: url('couple_collection.png');"></div><div class="collection-hero-overlay"></div><div class="hero-v2-content"><h1>Matching Collections</h1><p>Symphony of elegance designed for the perfect duo.</p></div></header>
-    <section class="collection-grid-v2" id="collection-grid"></section>
+    <section class="collection-grid-v2" id="collection-grid" style="min-height: 400px;"></section>
+    <footer class="footer"><div class="footer-bottom"><p>&copy; 2026 Gayatri Jewellers. All rights reserved.</p></div></footer>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-config.js"></script><script src="script.js"></script>
 </body>
