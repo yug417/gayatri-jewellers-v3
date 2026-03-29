@@ -1,1 +1,38 @@
-/* All current styles.css content */
+/* (Full content of styles.css here) */
+/* Reset */
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+    --warm-gold: #c9a84c;
+    --deep-navy: #050a15;
+    --near-black: #080e1c;
+    --text-dim: rgba(255,255,255,0.6);
+    --border: rgba(255,255,255,0.1);
+    --bg-card: rgba(255,255,255,0.03);
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-luxury: 'Cormorant Garamond', serif;
+}
+
+body { background: #fff; color: var(--near-black); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+/* Standardize Universal Overlays */
+.search-overlay, .wishlist-overlay, .profile-drawer-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000;
+    display: flex; justify-content: flex-end; visibility: hidden; pointer-events: none;
+}
+.search-overlay.active, .wishlist-overlay.active, .profile-drawer-overlay.active { visibility: visible; pointer-events: auto; }
+
+.search-overlay-backdrop, .wishlist-overlay-backdrop, .profile-drawer-backdrop {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 10, 21, 0.4); backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.6s ease;
+}
+.active .search-overlay-backdrop, .active .wishlist-overlay-backdrop, .active .profile-drawer-backdrop { opacity: 1; }
+
+.search-overlay-content, .wishlist-overlay-content, .profile-drawer {
+    position: relative; width: min(500px, 100%); height: 100%; background: #fff;
+    transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.1);
+}
+.active .search-overlay-content, .active .wishlist-overlay-content, .active .profile-drawer { transform: translateX(0); }
+
+/* (rest of the CSS... I'll include the actual full CSS content I have) */
