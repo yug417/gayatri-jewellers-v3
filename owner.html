@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard | Gayatri Jewellers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --bg-deep: #0a0f11;
+            --bg-card: #111a1d;
+            --bg-input: #0d1517;
+            --accent: #d4af37;
+            --accent-dim: rgba(212, 175, 55, 0.15);
+            --surface: #1a2a2d;
+            --text-main: #f0f0f0;
+            --text-dim: #8a9a9e;
+            --green: #00e676;
+            --red: #ff5252;
+            --border: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ─── Top Navigation ─── */
+        .admin-topbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .topbar-left .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #000;
+        }
+
+        .topbar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .topbar-title span { color: var(--accent); }
+
+        .topbar-right a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .topbar-right a:hover { color: var(--accent); }
+
+        /* ─── Tab Navigation ─── */
+        .tab-nav {
+            display: flex;
+            gap: 0;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 0 30px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            padding: 16px 24px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover { color: var(--text-main); }
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ─── Tab Panels ─── */
+        .tab-panel { display: none; padding: 30px; max-width: 1200px; margin: 0 auto; }
+        .tab-panel.active { display: block; }
+
+        /* ─── Add Product Form ─── */
+        .form-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .form-layout { grid-template-columns: 1fr; }
+        }
+
+        .form-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 30px;
+        }
+
+        .form-card h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+        }
+
+        .field { margin-bottom: 20px; }
+
+        .field label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field input, .field select, .field textarea {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .field input:focus, .field select:focus, .field textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .field select option { background: var(--bg-card); color: white; }
+
+        .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-input);
+            position: relative;
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .upload-content { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .upload-content i { font-size: 2.2rem; color: var(--accent); }
+        .upload-content span { font-weight: 500; font-size: 0.9rem; }
+        .upload-content small { color: var(--text-dim); font-size: 0.8rem; }
+
+        .upload-preview-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 180px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .upload-preview-wrap img {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+        }
+
+        .remove-img-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--red);
+            color: white;
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        /* Featured Toggle */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .toggle-row span { font-size: 0.9rem; }
+        .toggle-row .hint { font-size: 0.75rem; color: var(--text-dim); }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input { display: none; }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: var(--border);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--accent);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::after {
+            transform: translateX(20px);
+        }
+
+        /* Secret + Submit */
+        .secret-section {
+            border-top: 1px solid var(--border);
+            margin-top: 10px;
+            padding-top: 20px;
+        }
+
+        .publish-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+            margin-top: 16px;
+        }
+
+        .publish-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .publish-btn:active { transform: translateY(0); }
+        .publish-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* Status Message */
+        .status-msg {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-top: 16px;
+            display: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-msg.success {
+            background: rgba(0, 230, 118, 0.1);
+            color: var(--green);
+            border: 1px solid rgba(0, 230, 118, 0.2);
+            display: block;
+        }
+
+        .status-msg.error {
+            background: rgba(255, 82, 82, 0.1);
+            color: var(--red);
+            border: 1px solid rgba(255, 82, 82, 0.2);
+            display: block;
+        }
+
+        /* ─── Live Preview Card ─── */
+        .preview-sticky {
+            position: sticky;
+            top: 100px;
+        }
+
+        .preview-label {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .preview-card {
+            background: var(--bg-deep);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border: 1px solid var(--border);
+        }
+
+        .preview-card-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            background: #1a1a1a;
+        }
+
+        .preview-card-body { padding: 20px; }
+
+        .preview-card-cat {
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .preview-card-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .preview-card-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            flex-wrap: wrap;
+        }
+
+        .preview-card-price {
+            margin-top: 12px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .preview-card-desc {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .preview-destination {
+            margin-top: 16px;
+            padding: 10px 14px;
+            background: var(--accent-dim);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .preview-destination i { margin-right: 6px; }
+
+        /* ─── Products List Tab ─── */
+        .products-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .products-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .product-count-badge {
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .products-table {
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .products-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products-table th {
+            text-align: left;
+            padding: 14px 18px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .products-table td {
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .products-table tr:last-child td { border-bottom: none; }
+
+        .products-table tr:hover td {
+            background: rgba(212, 175, 55, 0.03);
+        }
+
+        .tbl-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        .tbl-name { font-weight: 600; }
+
+        .tbl-cat {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .tbl-cat.men { background: rgba(66, 165, 245, 0.15); color: #42a5f5; }
+        .tbl-cat.women { background: rgba(236, 64, 122, 0.15); color: #ec407a; }
+        .tbl-cat.wedding { background: rgba(255, 183, 77, 0.15); color: #ffb74d; }
+        .tbl-cat.couple { background: rgba(171, 71, 188, 0.15); color: #ab47bc; }
+
+        .delete-btn {
+            background: none;
+            border: 1px solid rgba(255, 82, 82, 0.3);
+            color: var(--red);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: var(--red);
+            color: white;
+            border-color: var(--red);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+        }
+
+        .empty-state i { font-size: 3rem; margin-bottom: 16px; color: var(--accent); }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            .tab-nav { overflow-x: auto; }
+            .tab-btn { font-size: 0.8rem; padding: 14px 16px; }
+            .tab-panel { padding: 20px; }
+            .row-2, .row-3 { grid-template-columns: 1fr; }
+            .products-table { overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+        <div class="topbar-left">
+            <div class="logo-mark">GJ</div>
+            <div class="topbar-title"><span>Owner</span> Dashboard</div>
+        </div>
+        <div class="topbar-right">
+            <a href="/index.html"><i class="ph ph-storefront"></i> View Store</a>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" data-tab="add"><i class="ph ph-plus-circle"></i> Add Product</button>
+        <button class="tab-btn" data-tab="list"><i class="ph ph-list-dashes"></i> All Products</button>
+        <button class="tab-btn" data-tab="rates"><i class="ph ph-chart-line-up"></i> Daily Rates</button>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TAB 1: ADD PRODUCT                      -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="tab-panel active" id="tab-add">
+        <div class="form-layout">
+
+            <!-- Left: Form -->
+            <div class="form-card">
+                <h2><i class="ph-bold ph-plus-circle"></i> New Product</h2>
+                <form id="product-form">
+
+                    <!-- Product Name -->
+                    <div class="field">
+                        <label>Product Name *</label>
+                        <input type="text" id="p-name" placeholder="e.g. Royal Gold Choker" required>
+                    </div>
+
+                    <!-- Category + Type -->
+                    <div class="row-2">
+                        <div class="field">
+                            <label>Category (Goes To) *</label>
+                            <select id="p-category" required>
+                                <option value="" disabled>Select page...</option>
+                                <option value="men">Men's Collection</option>
+                                <option value="women">Women's Collection</option>
+                                <option value="wedding">Wedding Couture</option>
+                                <option value="couple">Couple / Soulmate Sets</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Jewellery Type</label>
+                            <select id="p-type">
+                                <option value="Ring">Ring</option>
+                                <option value="Necklace">Necklace</option>
+                                <option value="Necklace Set">Necklace Set</option>
+                                <option value="Earrings">Earrings</option>
+                                <option value="Bangles">Bangles</option>
+                                <option value="Bracelet">Bracelet</option>
+                                <option value="Chain">Chain</option>
+                                <option value="Pendant">Pendant</option>
+                                <option value="Mangalsutra">Mangalsutra</option>
+                                <option value="Choker">Choker</option>
+                                <option value="Kada">Kada</option>
+                                <option value="Nose Pin">Nose Pin</option>
+                                <option value="Anklet">Anklet</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Karat + Weight + Price -->
+                    <div class="row-3">
+                        <div class="field">
+                            <label>Purity (Karat)</label>
+                            <select id="p-karat">
+                                <option value="24KT">24KT</option>
+                                <option value="22KT" selected>22KT</option>
+                                <option value="18KT">18KT</option>
+                                <option value="14KT">14KT</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Weight</label>
+                            <input type="text" id="p-weight" placeholder="e.g. 45g">
+                        </div>
+                        <div class="field">
+                            <label>Price</label>
+                            <input type="text" id="p-price" placeholder="e.g. ₹2,45,000">
+                        </div>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="field">
+                        <label>Product Image *</label>
+                        <div class="upload-zone" id="upload-zone">
+                            <input type="file" id="p-image-file" accept="image/*" style="display:none;">
+                            <div class="upload-content" id="upload-content">
+                                <i class="ph ph-cloud-arrow-up"></i>
+                                <span>Click or drag & drop your image</span>
+                                <small>JPG, PNG or WebP · Max 10MB</small>
+                            </div>
+                            <div class="upload-preview-wrap" id="upload-preview-wrap">
+                                <img id="upload-preview-img" src="/" alt="Preview">
+                                <button type="button" class="remove-img-btn" id="remove-img-btn"><i class="ph ph-x"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea id="p-desc" rows="3" placeholder="Describe the craftsmanship, materials, and design..."></textarea>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="field">
+                        <label>Tags (comma separated)</label>
+                        <input type="text" id="p-tags" placeholder="e.g. bridal, kundan, heavy, south indian">
+                    </div>
+
+                    <!-- Featured Toggle -->
+                    <div class="toggle-row">
+                        <div>
+                            <span>Mark as Featured</span>
+                            <div class="hint">Featured products appear on the Home page</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="p-featured">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <!-- Secret Key -->
+                    <div class="secret-section">
+                        <div class="field">
+                            <label>Owner Secret Key *</label>
+                            <input type="password" id="p-secret" placeholder="Enter your secret key to publish" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="publish-btn" id="submit-btn">
+                        <i class="ph-bold ph-paper-plane-tilt"></i>
+                        Publish to Store
+                    </button>
+
+                    <div id="status-msg" class="status-msg"></div>
+                </form>
+            </div>
+
+            <!-- Right: Live Preview -->
+            <div class="preview-sticky">
+                <div class="form-card">
+                    <div class="preview-label">Live Preview</div>
+                    <div class="preview-card">
+                        <img src="https://images.unsplash.com/photo-1599643478514-4a1101859187?w=400" alt="Preview" class="preview-card-img" id="pre-img">
+                        <div class="preview-card-body">
+                            <div class="preview-card-cat" id="pre-cat">Select a category</div>
+                            <div class="preview-card-name" id="pre-name">Product Name</div>
+                            <div class="preview-card-meta">
+                                <span id="pre-karat">22KT</span>
+                                <span>·</span>
+                                <span id="pre-type">Ring</span>
+                                <span>·</span>
+                                <span id="pre-weight">—</span>
+                            </div>
+                            <div class="preview-card-price" id="pre-price">₹ Price on Request</div>
+                            <div class="preview-card-desc" id="pre-desc"></div>
+                        </div>
+                    </div>
+                    <div class="preview-destination" id="pre-destination">
+                        <i class="ph ph-arrow-right"></i>
+                        Select a category to see where this goes
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TAB 2: VIEW ALL PRODUCTS                -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-list">
+        <div class="products-header">
+            <h2>All Products</h2>
+            <span class="product-count-badge" id="total-count">0 products</span>
+        </div>
+        <div class="products-table" id="products-table">
+            <div class="empty-state" id="products-loading">
+                <i class="ph ph-circle-notch ph-spin"></i>
+                <p>Loading products...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- TAB 3: DAILY GOLD RATES                 -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="tab-panel" id="tab-rates">
+        <div class="form-card" style="max-width: 600px; margin: 0 auto;">
+            <h2><i class="ph ph-chart-line-up"></i> Update Daily Gold Rates</h2>
+            <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 24px;">Set the current market rates per gram. These will be reflected instantly across the main website and gold rate charts.</p>
+            
+            <form id="rates-form">
+                <div class="row-2">
+                    <div class="field">
+                        <label>24KT Gold (per 1g)</label>
+                        <input type="number" id="rate-24" placeholder="e.g. 14471" required step="0.01">
+                    </div>
+                    <div class="field">
+                        <label>22KT Gold (per 1g)</label>
+                        <input type="number" id="rate-22" placeholder="e.g. 13265" required step="0.01">
+                    </div>
+                </div>
+                <div class="row-2">
+                    <div class="field">
+                        <label>18KT Gold (per 1g)</label>
+                        <input type="number" id="rate-18" placeholder="e.g. 10853" required step="0.01">
+                    </div>
+                    <div class="field">
+                        <label>14KT Gold (per 1g)</label>
+                        <input type="number" id="rate-14" placeholder="e.g. 8441" required step="0.01">
+                    </div>
+                </div>
+
+                <div class="secret-section" style="margin-top: 10px;">
+                    <div class="field">
+                        <label>Owner Secret Key *</label>
+                        <input type="password" id="rate-secret" placeholder="Enter secret key to update rates" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="publish-btn" id="rates-submit-btn">
+                    <i class="ph-bold ph-arrow-clockwise"></i>
+                    Update Market Rates
+                </button>
+
+                <div id="rates-status" class="status-msg"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = (window.location.protocol === 'file:' || !window.location.port) ? 'http://localhost:3000' : '';
+
+        const catPageMap = {
+            'men': "Men's Collection → men.html",
+            'women': "Women's Collection → women.html",
+            'wedding': "Wedding Couture → wedding.html",
+            'couple': "Couple / Soulmate → couple.html"
+        };
+
+        const catLabel = {
+            'men': "Men's Collection",
+            'women': "Women's Collection",
+            'wedding': "Wedding Couture",
+            'couple': "Soulmate Sets"
+        };
+
+        // ═══════════════════════════════════════
+        //  TAB SWITCHING
+        // ═══════════════════════════════════════
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+
+                if (btn.dataset.tab === 'list') loadProductsList();
+            });
+        });
+
+        // ═══════════════════════════════════════
+        //  IMAGE UPLOAD HANDLING
+        // ═══════════════════════════════════════
+        const zone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('p-image-file');
+        const uploadContent = document.getElementById('upload-content');
+        const previewWrap = document.getElementById('upload-preview-wrap');
+        const previewImg = document.getElementById('upload-preview-img');
+        const preImg = document.getElementById('pre-img');
+
+        zone.addEventListener('click', (e) => {
+            if (e.target.closest('.remove-img-btn')) return;
+            fileInput.click();
+        });
+
+        zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+        zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('dragover');
+            if (e.dataTransfer.files[0] && e.dataTransfer.files[0].type.startsWith('image/')) {
+                fileInput.files = e.dataTransfer.files;
+                showImagePreview(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files[0]) showImagePreview(fileInput.files[0]);
+        });
+
+        function showImagePreview(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                preImg.src = e.target.result;
+                uploadContent.style.display = 'none';
+                previewWrap.style.display = 'block';
+            };
+            reader.readAsDataURL(/file);
+        }
+
+        document.getElementById('remove-img-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInput.value = '';
+            uploadContent.style.display = 'flex';
+            previewWrap.style.display = 'none';
+            preImg.src = 'https://images.unsplash.com/photo-1599643478514-4a1101859187?w=400';
+        });
+
+        // ═══════════════════════════════════════
+        //  LIVE PREVIEW SYNC
+        // ═══════════════════════════════════════
+        const syncMap = {
+            'p-name': (v) => { document.getElementById('pre-name').textContent = v || 'Product Name'; },
+            'p-karat': (v) => { document.getElementById('pre-karat').textContent = v; },
+            'p-type': (v) => { document.getElementById('pre-type').textContent = v; },
+            'p-weight': (v) => { document.getElementById('pre-weight').textContent = v || '—'; },
+            'p-price': (v) => { document.getElementById('pre-price').textContent = v || '₹ Price on Request'; },
+            'p-desc': (v) => { document.getElementById('pre-desc').textContent = v; },
+            'p-category': (v) => {
+                document.getElementById('pre-cat').textContent = catLabel[v] || 'Select a category';
+                const dest = document.getElementById('pre-destination');
+                if (v && catPageMap[v]) {
+                    dest.innerHTML = `<i class="ph ph-arrow-right"></i> Will appear on: <strong>${catPageMap[v]}</strong>`;
+                } else {
+                    dest.innerHTML = `<i class="ph ph-arrow-right"></i> Select a category to see where this goes`;
+                }
+            }
+        };
+
+        Object.keys(syncMap).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', () => syncMap[id](el.value));
+                el.addEventListener('change', () => syncMap[id](el.value));
+            }
+        });
+
+        // ═══════════════════════════════════════
+        //  FORM SUBMISSION
+        // ═══════════════════════════════════════
+        const form = document.getElementById('product-form');
+        const statusMsg = document.getElementById('status-msg');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!fileInput.files[0]) {
+                statusMsg.textContent = '❌ Please select an image for the product.';
+                statusMsg.className = 'status-msg error';
+                return;
+            }
+
+            const category = document.getElementById('p-category').value;
+            if (!category) {
+                statusMsg.textContent = '❌ Please select a category (where should this product go?).';
+                statusMsg.className = 'status-msg error';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="ph ph-circle-notch ph-spin"></i> Publishing...';
+            statusMsg.className = 'status-msg';
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('p-name').value);
+            formData.append('category', category);
+            formData.append('type', document.getElementById('p-type').value);
+            formData.append('karat', document.getElementById('p-karat').value);
+            formData.append('weight', document.getElementById('p-weight').value);
+            formData.append('price', document.getElementById('p-price').value);
+            formData.append('description', document.getElementById('p-desc').value);
+            formData.append('secret', document.getElementById('p-secret').value);
+            formData.append('featured', document.getElementById('p-featured').checked);
+            formData.append('imageFile', fileInput.files[0]);
+
+            // Build tags from the input + auto-tags
+            const tagInput = document.getElementById('p-tags').value;
+            const tags = tagInput ? tagInput.split(',').map(t => t.trim()).filter(Boolean) : [];
+            formData.append('tags', JSON.stringify(tags));
+
+            try {
+                const response = await fetch(`${API_BASE}/api/products`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusMsg.textContent = `✅ ${result.message}`;
+                    statusMsg.className = 'status-msg success';
+                    form.reset();
+                    uploadContent.style.display = 'flex';
+                    previewWrap.style.display = 'none';
+                    preImg.src = 'https://images.unsplash.com/photo-1599643478514-4a1101859187?w=400';
+                    // Reset preview text
+                    Object.keys(syncMap).forEach(id => syncMap[id](''));
+                } else {
+                    statusMsg.textContent = `❌ ${result.error || 'Failed to add product'}`;
+                    statusMsg.className = 'status-msg error';
+                }
+            } catch (err) {
+                statusMsg.textContent = '❌ Network Error — Make sure the server is running (node server.js)';
+                statusMsg.className = 'status-msg error';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="ph-bold ph-paper-plane-tilt"></i> Publish to Store';
+            }
+        });
+
+        // ═══════════════════════════════════════
+        //  LOAD PRODUCTS LIST (Tab 2)
+        // ═══════════════════════════════════════
+        async function loadProductsList() {
+            const container = document.getElementById('products-table');
+            const countEl = document.getElementById('total-count');
+
+            container.innerHTML = '<div class="empty-state"><i class="ph ph-circle-notch ph-spin"></i><p>Loading...</p></div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/products`);
+                const data = await response.json();
+                const products = data.products || [];
+
+                countEl.textContent = `${products.length} products`;
+
+                if (products.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><i class="ph ph-package"></i><p>No products yet. Go to "Add Product" to create one!</p></div>';
+                    return;
+                }
+
+                container.innerHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Karat</th>
+                                <th>Weight</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${products.map(p => `
+                                <tr id="row-${p.id}">
+                                    <td><img src="/${p.image.startsWith('/') ? API_BASE + p.image : p.image}" class="tbl-img" alt="${p.name}"></td>
+                                    <td class="tbl-name">${p.name}</td>
+                                    <td><span class="tbl-cat ${p.category}">${p.category}</span></td>
+                                    <td>${p.type || '—'}</td>
+                                    <td>${p.karat || '—'}</td>
+                                    <td>${p.weight || '—'}</td>
+                                    <td>${p.price || '—'}</td>
+                                    <td><button class="delete-btn" onclick="deleteProduct('${p.id}', '${p.name.replace(/'/g, "\\'")}')"><i class="ph ph-trash"></i> Delete</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } catch (err) {
+                container.innerHTML = '<div class="empty-state"><i class="ph ph-warning"></i><p>Could not load products. Is the server running?</p></div>';
+            }
+        }
+
+        // ═══════════════════════════════════════
+        //  DELETE PRODUCT
+        // ═══════════════════════════════════════
+        async function deleteProduct(id, name) {
+            const secret = prompt(`To delete "${name}", enter your owner secret key:`);
+            if (!secret) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/products/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Owner-Secret': secret
+                    }
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    const row = document.getElementById('row-' + id);
+                    if (row) {
+                        row.style.opacity = '0';
+                        row.style.transform = 'translateX(50px)';
+                        row.style.transition = 'all 0.3s';
+                        setTimeout(() => { row.remove(); }, 300);
+                    }
+                    alert(`✅ ${result.message}`);
+                    // Update count
+                    const badge = document.getElementById('total-count');
+                    const current = parseInt(badge.textContent);
+                    badge.textContent = `${current - 1} products`;
+                } else {
+                    alert(`❌ ${result.error || 'Failed to delete.'}`);
+                }
+            } catch (err) {
+                alert('❌ Network error. Is the server running?');
+            }
+        }
+
+        // ═══════════════════════════════════════
+        //  GOLD RATES HANDLING (Tab 3)
+        // ═══════════════════════════════════════
+        const ratesForm = document.getElementById('rates-form');
+        const ratesStatus = document.getElementById('rates-status');
+        const ratesSubmit = document.getElementById('rates-submit-btn');
+
+        async function loadCurrentRates() {
+            try {
+                const res = await fetch(`${API_BASE}/api/gold-rates`);
+                const data = await res.json();
+                if (data) {
+                    if (data['24KT']) document.getElementById('rate-24').value = data['24KT'].price;
+                    if (data['22KT']) document.getElementById('rate-22').value = data['22KT'].price;
+                    if (data['18KT']) document.getElementById('rate-18').value = data['18KT'].price;
+                    if (data['14KT']) document.getElementById('rate-14').value = data['14KT'].price;
+                }
+            } catch (e) {}
+        }
+
+        // Load rates when clicking tab
+        document.querySelector('[data-tab="rates"]').addEventListener('click', loadCurrentRates);
+
+        ratesForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            ratesSubmit.disabled = true;
+            ratesSubmit.innerHTML = '<i class="ph ph-circle-notch ph-spin"></i> Updating...';
+            ratesStatus.className = 'status-msg';
+
+            const payload = {
+                secret: document.getElementById('rate-secret').value,
+                rates: {
+                    "24KT": document.getElementById('rate-24').value,
+                    "22KT": document.getElementById('rate-22').value,
+                    "18KT": document.getElementById('rate-18').value,
+                    "14KT": document.getElementById('rate-14').value
+                }
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/api/gold-rates`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    ratesStatus.textContent = '✅ Gold rates updated successfully!';
+                    ratesStatus.className = 'status-msg success';
+                } else {
+                    ratesStatus.textContent = `❌ ${result.error || 'Failed to update rates.'}`;
+                    ratesStatus.className = 'status-msg error';
+                }
+            } catch (err) {
+                ratesStatus.textContent = '❌ Network error. Is the server running?';
+                ratesStatus.className = 'status-msg error';
+            } finally {
+                ratesSubmit.disabled = false;
+                ratesSubmit.innerHTML = '<i class="ph-bold ph-arrow-clockwise"></i> Update Market Rates';
+            }
+        });
+    </script>
+</body>
+</html>

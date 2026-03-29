@@ -4,19 +4,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details | Gayatri Jewellers</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="detail-page" data-category="detail">
-    <nav class="navbar scrolled" id="navbar"><div class="nav-left"><a href="index.html" class="logo"><img src="logo.no.bg.png" alt="Gayatri Jewellers" style="height: 50px;"><span class="brand-name">Gayatri <span style="color: var(--warm-gold);">Jewellers</span></span></a></div><div class="nav-center"><a href="index.html" class="nav-link">Home</a> <a href="men.html" class="nav-link">Men</a> <a href="wedding.html" class="nav-link">Wedding</a> <a href="couple.html" class="nav-link">Couple</a> <a href="women.html" class="nav-link">Women</a> <a href="all-collections.html" class="nav-link">All</a></div><div class="nav-right"><button class="icon-btn" id="search-trigger"><i class="ph ph-magnifying-glass"></i></button><button class="icon-btn wishlist-btn" id="wishlist-trigger" style="position: relative;"><i class="ph ph-heart"></i><span class="badge" id="wishlist-badge">0</span></button><button class="icon-btn" id="profile-trigger"><i class="ph ph-user"></i></button></div></nav>
+
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-left">
+            <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 15px; text-decoration: none;">
+                <img src="/logo.no.bg.png" alt="Gayatri Jewellers" class="brand-logo" style="height: 50px;">
+                <span class="brand-name" style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: #000; letter-spacing: 2px;">Gayatri <span style="color: var(--warm-gold);">Jewellers</span></span>
+            </a>
+        </div>
+        <div class="nav-center">
+            <a href="/index.html" class="nav-link">Home</a>
+            <a href="/men.html" class="nav-link">Men</a>
+            <a href="/wedding.html" class="nav-link">Wedding</a>
+            <a href="/couple.html" class="nav-link">Couple</a>
+            <a href="/women.html" class="nav-link">Women</a>
+            <a href="/all-collections.html" class="nav-link">All</a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" id="search-trigger"><i class="ph ph-magnifying-glass"></i></button>
+            <button class="icon-btn wishlist-btn" id="wishlist-trigger" style="position: relative;">
+                <i class="ph ph-heart"></i>
+                <span class="badge" id="wishlist-badge" style="position:absolute; top:-5px; right:-5px; background:var(--warm-gold); color:#000; font-size:0.7rem; width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">0</span>
+            </button>
+            <button class="icon-btn" id="profile-trigger"><i class="ph ph-user"></i></button>
+        </div>
+    </nav>
+
     <main class="product-detail-main">
-        <div class="breadcrumb"><a href="index.html">Home</a> <i class="ph ph-caret-right"></i> <span id="breadcrumb-category">Category</span> <i class="ph ph-caret-right"></i> <span id="breadcrumb-name" class="active">Product</span></div>
-        <section class="product-view"><div class="product-view-container"><div class="product-image-section"><div class="detail-image-card"><img id="main-image" src="" alt="Product"></div></div><div class="product-info-section"><div class="info-top"><span class="detail-type-tag" id="detail-type">Earrings</span><h1 id="detail-name">Loading...</h1></div><div class="detail-price" id="detail-price">₹ 0,00,000</div><div class="detail-attributes"><div class="attr-box"><span class="attr-label">Purity</span><span class="attr-val" id="detail-karat">22 KT</span></div><div class="attr-box"><span class="attr-label">Weight</span><span class="attr-val" id="detail-weight">0.00g</span></div><div class="attr-box"><span class="attr-label">Stock</span><span class="attr-val">In Store</span></div></div><div class="purchase-actions"><button class="detail-wishlist-toggle" id="detail-wish-btn" style="flex:1;"><i class="ph ph-heart"></i> Add to Treasury</button><a href="#" id="whatsapp-inquiry" class="whatsapp-btn" style="flex:1;"><i class="ph ph-whatsapp-logo"></i> Enquire</a></div></div></div></section>
+        <div class="breadcrumb">
+            <a href="/index.html">Home</a> <i class="ph ph-caret-right"></i> 
+            <span id="breadcrumb-category">Category</span> <i class="ph ph-caret-right"></i> 
+            <span id="breadcrumb-name" class="active">Product</span>
+        </div>
+
+        <section class="product-view">
+            <div class="product-view-container">
+                <div class="product-image-section">
+                    <div class="detail-image-card">
+                        <img id="main-image" src="/" alt="Product" style="width: 100%; height: auto; border-radius: 20px;">
+                        <div class="image-zoom-hint">Bespoke Artisanal Craftsmanship</div>
+                    </div>
+                </div>
+
+                <div class="product-info-section">
+                    <div class="info-top">
+                        <span class="detail-type-tag" id="detail-type">Earrings</span>
+                        <h1 id="detail-name" style="font-family: 'Cinzel', serif; margin: 10px 0;">Loading Product...</h1>
+                        <p class="detail-id" id="detail-id">ID: GJ-000</p>
+                    </div>
+
+                    <div class="detail-price" id="detail-price" style="font-size: 2rem; color: var(--warm-gold); margin: 20px 0; font-weight: 700;">₹ 0,00,000</div>
+
+                    <div class="detail-attributes" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 30px 0;">
+                        <div class="attr-box" style="background: #f9f9f9; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #eee;">
+                            <span class="attr-label" style="display: block; font-size: 0.7rem; opacity: 0.6; text-transform: uppercase;">Purity</span>
+                            <span class="attr-val" id="detail-karat" style="font-weight: 700;">22 KT</span>
+                        </div>
+                        <div class="attr-box" style="background: #f9f9f9; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #eee;">
+                            <span class="attr-label" style="display: block; font-size: 0.7rem; opacity: 0.6; text-transform: uppercase;">Weight</span>
+                            <span class="attr-val" id="detail-weight" style="font-weight: 700;">0.00g</span>
+                        </div>
+                        <div class="attr-box" style="background: #f9f9f9; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #eee;">
+                            <span class="attr-label" style="display: block; font-size: 0.7rem; opacity: 0.6; text-transform: uppercase;">Stock</span>
+                            <span class="attr-val" style="font-weight: 700; color: #2ecc71;">In Store</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-description" style="margin-bottom: 30px;">
+                        <h3 style="font-size: 1rem; margin-bottom: 10px;">Product Description</h3>
+                        <p id="detail-desc" style="line-height: 1.6; opacity: 0.8;">
+                            This exquisite piece is carefully handcrafted with the finest materials... 
+                        </p>
+                    </div>
+
+                    <div class="purchase-actions" style="display: flex; gap: 15px; margin-bottom: 40px;">
+                        <button class="detail-wishlist-toggle" id="detail-wish-btn" style="flex: 1; padding: 1.2rem; border: 1px solid var(--warm-gold); background: transparent; color: var(--warm-gold); border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="ph ph-heart"></i> Add to Wishlist
+                        </button>
+                        <a href="#" id="whatsapp-inquiry" class="whatsapp-btn" style="flex: 1; padding: 1.2rem; background: #25D366; color: #fff; border-radius: 12px; font-weight: 700; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="ph-fill ph-whatsapp-logo"></i> Enquire
+                        </a>
+                    </div>
+
+                    <div class="trust-container" style="display: flex; gap: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+                        <div class="trust-item" style="font-size: 0.8rem; display: flex; align-items: center; gap: 8px;"><i class="ph ph-certificate"></i> BIS Hallmarked</div>
+                        <div class="trust-item" style="font-size: 0.8rem; display: flex; align-items: center; gap: 8px;"><i class="ph ph-shield-check"></i> 100% Secure</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="related-products" style="padding: 60px 0;">
+            <h2 class="section-title" style="margin-bottom: 40px;">You May Also Love</h2>
+            <div class="collection-grid-v2" id="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px;">
+                <!-- Related products will load here -->
+            </div>
+        </section>
     </main>
-    <div class="search-overlay" id="search-overlay"><div class="search-overlay-backdrop"></div><div class="search-overlay-content"><button class="search-close" id="search-close"><i class="ph ph-x"></i></button><div class="search-header"><div class="search-input-wrapper"><i class="ph ph-magnifying-glass"></i><input id="search-input" class="search-input" placeholder="Search..."></div></div><div class="search-body" id="search-body"><div id="results-grid"></div></div></div></div>
-    <div class="wishlist-overlay" id="wishlist-overlay"><div class="wishlist-overlay-backdrop"></div><div class="wishlist-overlay-content"><button class="wishlist-close" id="wishlist-close"><i class="ph ph-x"></i></button><div class="wishlist-header"><h2>Your Treasury</h2></div><div class="wishlist-body" id="wishlist-grid"></div></div></div>
-    <div class="profile-drawer-overlay" id="profile-drawer-overlay"><div class="profile-drawer-backdrop"></div><aside class="profile-drawer"><button class="profile-close" id="profile-close"><i class="ph ph-x"></i></button><div class="profile-guest" id="profile-guest"><form id="profile-login-form"><input id="login-name" placeholder="Name"><input id="login-phone" placeholder="Phone"><button type="submit">Continue</button></form></div></aside></div>
+
+    <footer class="footer"><div class="footer-bottom" style="background: #000; color: #fff; padding: 2rem; text-align: center;"><p>&copy; 2026 Gayatri Jewellers. All rights reserved.</p></div></footer>
+
+    <!-- Overlay Components (Universal Template) -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-overlay-backdrop"></div>
+        <div class="search-overlay-content" style="background: #fff; padding: 2rem;">
+            <button class="search-close" id="search-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
+            <div class="search-header" style="margin-bottom: 2rem;">
+                <div class="search-input-wrapper" style="display: flex; align-items: center; border: 1px solid rgba(0,0,0,0.1); padding: 1rem; border-radius: 10px;">
+                    <i class="ph ph-magnifying-glass search-icon" style="margin-right: 1rem;"></i>
+                    <input type="text" id="search-input" class="search-input" style="flex: 1; border: none; outline: none;" placeholder="Search treasures..." autocomplete="off">
+                </div>
+            </div>
+            <div class="search-body" id="search-body">
+                <div class="search-suggestions-panel" id="search-suggestions" style="display:none;"><ul class="suggestion-list" id="suggestion-list"></ul></div>
+                <div class="search-results-panel" id="search-results" style="display:none;"><div class="results-grid" id="results-grid"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wishlist-overlay" id="wishlist-overlay">
+        <div class="wishlist-overlay-backdrop"></div>
+        <div class="wishlist-overlay-content" style="background: #fff;">
+            <button class="wishlist-close" id="wishlist-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
+            <div class="wishlist-header" style="padding: 2rem;"><h2 class="wishlist-title">Your Treasury</h2></div>
+            <div class="wishlist-body" style="padding: 2rem;"><div class="wishlist-grid" id="wishlist-grid"></div></div>
+            <div class="wishlist-footer" style="padding: 2rem;"><div id="wishlist-total-items">0 pieces</div><button class="enquire-master-btn" style="width: 100%; padding: 1rem; background: #25D366; color: #fff; border-radius: 10px;"><i class="ph ph-whatsapp-logo"></i> Enquire</button></div>
+        </div>
+    </div>
+
+    <div class="profile-drawer-overlay" id="profile-drawer-overlay">
+        <div class="profile-drawer-backdrop"></div>
+        <aside class="profile-drawer" style="background: #080e1c; color: #fff; width: min(400px, 100vw);">
+            <button class="profile-close" id="profile-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
+            <div class="profile-guest" id="profile-guest" style="padding: 2rem;">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Welcome</h2>
+                <form id="profile-login-form">
+                    <input type="text" id="login-name" class="profile-input" style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;" placeholder="Full Name" required>
+                    <input type="tel" id="login-phone" class="profile-input" style="width: 100%; padding: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;" placeholder="Phone Number" required>
+                    <button type="submit" id="login-submit-btn" style="width: 100%; padding: 1rem; background: var(--warm-gold); color: #000; border-radius: 10px; font-weight: 700;">Continue</button>
+                </form>
+            </div>
+            <div class="profile-logged" id="profile-logged" style="display:none; padding: 2rem;">
+                <div style="text-align: center; margin-bottom: 2rem;"><div style="width: 60px; height: 60px; background: var(--warm-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #000; font-weight: 700;"><span id="avatar-initial">G</span></div><h2 id="profile-display-name">Guest</h2></div>
+                <button id="profile-open-wishlist" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); color: #fff; border-radius: 10px; text-align: left; margin-bottom: 1rem;"><i class="ph ph-heart"></i> My Treasury</button>
+                <button id="profile-logout" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); color: #fff; border-radius: 10px; text-align: left;"><i class="ph ph-sign-out"></i> Logout</button>
+            </div>
+        </aside>
+    </div>
+
+    <div class="fly-heart" id="fly-heart" style="position: fixed; display: none; z-index: 10002; color: var(--warm-gold); font-size: 2rem;"><i class="ph-fill ph-heart"></i></div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js"></script><script src="script.js"></script>
+    <script src="/supabase-config.js"></script>
+    <script src="/script.js"></script>
+    <script>
+        // Page specific logic (already robust in script.js but keeping sync)
+        document.addEventListener('DOMContentLoaded', async () => {
+             const getProduct = async () => {
+                const params = new URLSearchParams(window.location.search);
+                const productId = params.get('id');
+                if (!productId) return null;
+                
+                const products = window.GLOBAL_PRODUCTS || [];
+                return products.find(p => p.id === productId);
+             };
+
+             const product = await getProduct();
+             if (product) {
+                const wishBtn = document.getElementById('detail-wish-btn');
+                const updateBtn = (isIn) => {
+                    wishBtn.innerHTML = isIn ? '<i class="ph-fill ph-heart"></i> Remove from Wishlist' : '<i class="ph ph-heart"></i> Add to Wishlist';
+                    if (isIn) wishBtn.classList.add('active');
+                    else wishBtn.classList.remove('active');
+                };
+                
+                const wishlist = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
+                updateBtn(wishlist.some(i => i.id === product.id));
+
+                wishBtn.onclick = () => {
+                    window.toggleWishlist(product.id);
+                    const freshWishlist = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
+                    updateBtn(freshWishlist.some(i => i.id === product.id));
+                };
+             }
+        });
+    </script>
 </body>
 </html>
