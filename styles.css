@@ -97,3 +97,34 @@ h1, h2, h3, h4, h5, h6 {
     transition: all 0.4s ease;
     text-shadow: none; /* Gradient handles the look */
 }
+
+/* Specific highlight for "Gayatri" */
+.brand-name::first-line {
+    font-size: 1.1em;
+}
+
+.logo:hover .brand-name {
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.5));
+    transform: translateX(4px);
+}
+
+.brand-logo {
+    height: 44px !important;
+    width: 44px !important;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    background: transparent;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: block;
+}
+
+.brand-logo:hover {
+    transform: scale(1.08) rotate(5deg);
+}
+
+.nav-center {
+    display: flex;
+    gap: 2.5rem;
+}
