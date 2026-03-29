@@ -5,10 +5,10 @@
 // 1. GLOBAL STATE & CONFIGURATION
 window.API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:3000' : '';
 window.GLOBAL_PRODUCTS = [
-    { id: "GJ-001", name: "Royal Kundan Bridal Set", category: "wedding", type: "Necklace Set", karat: "22KT", weight: "124g", price: "₹4,85,000", image: "https://images.unsplash.com/photo-1599643478514-4a1101859187", tags: ["bridal", "kundan", "necklace", "wedding", "set", "gold"], featured: true },
-    { id: "GJ-002", name: "Eternity Diamond Ring", category: "women", type: "Ring", karat: "18KT", weight: "8g", price: "₹85,500", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908", tags: ["diamond", "ring", "women", "engagement", "solitaire"], featured: true },
-    { id: "GJ-003", name: "Traditional Gold Bangles Set", category: "women", type: "Bangles", karat: "22KT", weight: "45g", price: "₹2,42,000", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a", tags: ["bangles", "traditional", "gold", "women", "maharashtrian"], featured: true },
-    { id: "GJ-015", name: "Antique Finish Necklace", category: "women", type: "Necklace", karat: "22KT", weight: "68g", price: "₹3,95,000", image: "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed", tags: ["antique", "necklace", "gold", "temple", "festival", "heritage", "women"], featured: false }
+    { id: "GJ-001", name: "Royal Kundan Bridal Set", category: "wedding", type: "Necklace Set", karat: "22KT", weight: "124g", price: "₹4,85,000", image: "https://images.unsplash.com/photo-1599643478514-4a1101859187", tags: ["bridal", "kundan", "necklace", "wedding", "set", "gold"], featured: true, description: "An opulent masterpiece of Kundan craftsmanship, this bridal set is designed for the modern queen who cherishes her heritage." },
+    { id: "GJ-002", name: "Eternity Diamond Ring", category: "women", type: "Ring", karat: "18KT", weight: "8g", price: "₹85,500", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908", tags: ["diamond", "ring", "women", "engagement", "solitaire"], featured: true, description: "A timeless 18KT gold band adorned with brilliant-cut diamonds." },
+    { id: "GJ-003", name: "Signature Gold Kadha", category: "men", type: "Bracelet", karat: "22KT", weight: "42g", price: "₹2,65,000", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a", tags: ["men", "gold", "kadha", "bracelet", "traditional"], featured: true, description: "A bold and powerful 22KT gold kadha for men, symbolizing strength and status." },
+    { id: "GJ-004", name: "Twin Souls Bands", category: "couple", type: "Rings", karat: "18KT", weight: "12g", price: "₹1,15,000", image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e", tags: ["couple", "rings", "wedding", "matching", "gold"], featured: true, description: "Matching 18KT gold bands for those who have found their missing half." }
 ];
 
 // 2. CORE SYNC ENGINES (API ↔ FRONTEND)
@@ -19,12 +19,17 @@ async function syncGlobalProducts() {
         const data = await res.json();
         if (data && data.products && data.products.length > 0) {
             window.GLOBAL_PRODUCTS = data.products;
-            if (window.initCollection) window.initCollection();
-            const track = document.getElementById('scroll-track');
-            if (track) renderHomeFeatured(window.GLOBAL_PRODUCTS.filter(p => p.featured));
-            if (window.syncWishlistUI) window.syncWishlistUI();
         }
-    } catch (err) { console.warn("Using Fallback Product State."); }
+    } catch (err) { 
+        console.warn("Using Fallback Product State."); 
+    } finally {
+        // Always run initializations even if fetch fails
+        if (window.initCollection) window.initCollection();
+        if (window.renderProductDetails) window.renderProductDetails();
+        const track = document.getElementById('scroll-track');
+        if (track) renderHomeFeatured(window.GLOBAL_PRODUCTS.filter(p => p.featured));
+        if (window.syncWishlistUI) window.syncWishlistUI();
+    }
 }
 
 async function syncGoldRates() {
@@ -95,8 +100,10 @@ window.initCollection = function(typeFilter) {
         return pc === cat || pc === 'all' || cat === 'all'; 
     });
     if (typeFilter && typeFilter !== 'all') prods = prods.filter(p => (p.type || "").toLowerCase() === typeFilter.toLowerCase());
-    const countDisp = document.getElementById('count-display');
+    
+    const countDisp = document.getElementById('count-display') || document.getElementById('count-display-sub');
     if(countDisp) countDisp.textContent = prods.length;
+    
     if(prods.length === 0) { 
         grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:100px 20px; opacity:0.3;"><h3>No pieces found in this selection.</h3></div>'; 
         return; 
@@ -105,13 +112,50 @@ window.initCollection = function(typeFilter) {
     if (window.syncWishlistUI) window.syncWishlistUI();
 };
 
+window.renderProductDetails = function() {
+    const params = new URLSearchParams(window.location.search);
+    const pid = params.get('id');
+    if (!pid || !document.getElementById('detail-name')) return;
+
+    const p = (window.GLOBAL_PRODUCTS || []).find(prod => prod.id === pid);
+    if (!p) {
+        document.getElementById('detail-name').textContent = "Piece Not Found";
+        return;
+    }
+
+    // Populate elements
+    const set = (id, val) => { const e = document.getElementById(id); if(e) e.textContent = val; };
+    set('detail-name', p.name);
+    set('detail-id', `ID: ${p.id}`);
+    set('detail-type', p.type);
+    set('detail-price', p.price || "Contact Us");
+    set('detail-karat', p.karat);
+    set('detail-weight', p.weight);
+    set('detail-desc', p.description || "A masterfully crafted piece of high-jewellery, showcasing traditional techniques and modern elegance.");
+    set('breadcrumb-category', p.category.charAt(0).toUpperCase() + p.category.slice(1));
+    set('breadcrumb-name', p.name);
+
+    const img = document.getElementById('main-image');
+    if (img) img.src = p.image || p.img;
+
+    const wa = document.getElementById('whatsapp-inquiry');
+    if (wa) wa.href = `https://wa.me/919876543210?text=I am interested in ${p.name} (ID: ${p.id}). Please provide more details.`;
+
+    // Render related
+    const relatedGrid = document.getElementById('related-grid');
+    if (relatedGrid) {
+        const related = (window.GLOBAL_PRODUCTS || []).filter(item => item.category === p.category && item.id !== p.id).slice(0, 4);
+        relatedGrid.innerHTML = related.map((item, i) => generateProductCardHTML(item, i)).join('');
+    }
+};
+
 // 4. TREASURY (WISHLIST) ENGINE
 (function() {
     const wO = document.getElementById('wishlist-overlay');
     const wT = document.getElementById('wishlist-trigger') || document.getElementById('wishlist-trigger-sub');
     const wC = document.getElementById('wishlist-close') || document.querySelector('.wishlist-close');
     const wG = document.getElementById('wishlist-grid');
-    const totalItemsEl = document.getElementById('wishlist-total-count');
+    const totalItemsEl = document.getElementById('wishlist-total-count') || document.getElementById('wishlist-total-items');
     const totalWeightEl = document.getElementById('wishlist-total-weight');
     const wBadge = document.getElementById('wishlist-badge') || document.getElementById('wishlist-badge-sub');
 
@@ -126,7 +170,7 @@ window.initCollection = function(typeFilter) {
             let p = (window.GLOBAL_PRODUCTS || []).find(prod => prod.id === id);
             if (!p) {
                 const card = document.querySelector(`[data-product-id="${id}"]`);
-                if (card) p = { id, name: card.querySelector('.p-title, .product-name')?.textContent || "Masterpiece", image: card.querySelector('.p-img, .product-img')?.src || "", karat: card.querySelector('.p-pill, .purity-badge')?.textContent || "22KT", weight: card.querySelector('.p-wt, .product-weight')?.textContent || "Purity", price: card.querySelector('.p-price')?.textContent || "Request Price" };
+                if (card) p = { id, name: card.querySelector('.p-title, .product-name')?.textContent || "Masterpiece", image: card.querySelector('.p-img, .product-img')?.src || "", image: card.querySelector('.p-img, .product-img')?.src || "", karat: card.querySelector('.p-pill, .purity-badge')?.textContent || "22KT", weight: card.querySelector('.p-wt, .product-weight')?.textContent || "Purity", price: card.querySelector('.p-price')?.textContent || "Request Price" };
             }
             if (p) {
                 wl.push({ id: p.id, name: p.name, img: p.image || p.img, karat: p.karat, weight: p.weight, price: p.price });
@@ -137,6 +181,16 @@ window.initCollection = function(typeFilter) {
         localStorage.setItem('gj_wishlist', JSON.stringify(wl));
         window.syncWishlistUI();
         if (wO && wO.classList.contains('active')) window.renderWishlist();
+        
+        // Update product detail page specifically if we're on it
+        if (window.location.pathname.includes('product-detail.html')) {
+            const detailBtn = document.getElementById('detail-wish-btn');
+            if(detailBtn) {
+               const isIn = wl.some(i => i.id === id);
+               detailBtn.innerHTML = isIn ? '<i class="ph-fill ph-heart"></i> Remove from Wishlist' : '<i class="ph ph-heart"></i> Add to Wishlist';
+               detailBtn.classList.toggle('active', isIn);
+            }
+        }
     };
 
     window.syncWishlistUI = function() {
@@ -181,11 +235,11 @@ window.initCollection = function(typeFilter) {
 
     function showToast(m) {
         let t = document.getElementById('gj-toast');
-        if(!t){ t=document.createElement('div'); t.id='gj-toast'; t.style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:rgba(5, 10, 21, 0.9); color:white; padding:15px 30px; border-radius:50px; z-index:10001; box-shadow:0 15px 40px rgba(0,0,0,0.4); transition:all 0.4s cubic-bezier(0.119, 1, 0.22, 1); opacity:0; pointer-events:none; border:1px solid rgba(201,168,76,0.3); backdrop-filter:blur(10px); font-weight:600;"; document.body.appendChild(t); }
+        if(!t){ t=document.createElement('div'); t.id='gj-toast'; t.style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:rgba(5, 10, 21, 0.9); color:white; padding:15px 30px; border-radius:50px; z-index:10001; box-shadow:0 15px 40px rgba(0,0,0,0.4); transition:all 0.4s cubic-bezier(0.19, 1, 0.22, 1); opacity:0; pointer-events:none; border:1px solid rgba(201,168,76,0.3); backdrop-filter:blur(10px); font-weight:600;"; document.body.appendChild(t); }
         t.textContent = m; t.style.opacity = '1'; t.style.bottom = '40px';
         setTimeout(() => { t.style.opacity = '0'; t.style.bottom = '30px'; }, 3000);
     }
-    if (wT) wT.addEventListener('click', () => { window.renderWishlist(); wO.classList.add('active'); });
+    if (wT) wT.addEventListener('click', () => { window.renderWishlist(); if(wO) wO.classList.add('active'); });
     if (wC) wC.addEventListener('click', () => wO.classList.remove('active'));
     
     // Backdrop click handlers
@@ -278,7 +332,7 @@ window.initCollection = function(typeFilter) {
     if (sT) sT.addEventListener('click', () => { if(sO) sO.classList.add('active'); if(sI) setTimeout(() => sI.focus(), 400); });
     if (sC) sC.addEventListener('click', () => sO.classList.remove('active'));
     if (sI) sI.addEventListener('input', () => performSearch(sI.value));
-    if (sClear) sClear.addEventListener('click', () => { if(sI) sI.value = ''; performSearch(''); });
+    if (sClear) sClear.addEventListener('click', () => { if(sI) sI.value = ''; if(sI) performSearch(sI.value); });
 
     // Profile Drawer Logic
     const pO = document.getElementById('profile-drawer-overlay');
@@ -325,7 +379,7 @@ window.initCollection = function(typeFilter) {
             const name = nInput.value.trim();
             const phone = pInput.value.replace(/\D/g, '');
             if (!name || phone.length !== 10) return;
-            lBtn.disabled = true;
+            if(lBtn) lBtn.disabled = true;
             try {
                 let u = null; let saved = false;
                 if (window.saveProfileToSupabase) {
@@ -339,12 +393,12 @@ window.initCollection = function(typeFilter) {
                     } catch (err) { u = { id: 'LOCAL-'+Date.now(), name, phone }; }
                 }
                 if(u){ saveS(u); showL(u); }
-            } finally { lBtn.disabled = false; }
+            } finally { if(lBtn) lBtn.disabled = false; }
         });
     }
 
     if (logoutBtn) logoutBtn.addEventListener('click', () => { clearS(); showG(); });
-    if (wNav) wNav.addEventListener('click', () => { pO.classList.remove('active'); setTimeout(() => { window.renderWishlist(); document.getElementById('wishlist-overlay')?.classList.add('active'); }, 450); });
+    if (wNav) wNav.addEventListener('click', () => { if(pO) pO.classList.remove('active'); setTimeout(() => { window.renderWishlist(); if(document.getElementById('wishlist-overlay')) document.getElementById('wishlist-overlay').classList.add('active'); }, 450); });
 
     const exU = getS();
     if (exU) {

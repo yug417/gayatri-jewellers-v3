@@ -1,0 +1,141 @@
+{
+  "products": [
+    {
+      "id": "GJ-001",
+      "name": "Royal Kundan Bridal Set",
+      "category": "wedding",
+      "type": "Necklace Set",
+      "karat": "22KT",
+      "weight": "124g",
+      "price": "₹4,85,000",
+      "image": "https://images.unsplash.com/photo-1599643478514-4a1101859187",
+      "tags": ["bridal", "kundan", "necklace", "wedding", "set", "gold"],
+      "featured": true,
+      "description": "An opulent masterpiece of Kundan craftsmanship, this bridal set is designed for the modern queen who cherishes her heritage. Features intricate stone settings and a heavy gold base."
+    },
+    {
+      "id": "GJ-002",
+      "name": "Eternity Diamond Ring",
+      "category": "women",
+      "type": "Ring",
+      "karat": "18KT",
+      "weight": "8g",
+      "price": "₹85,500",
+      "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908",
+      "tags": ["diamond", "ring", "women", "engagement", "solitaire"],
+      "featured": true,
+      "description": "A timeless 18KT gold band adorned with brilliant-cut diamonds, celebrating love that lasts an eternity. Perfect for engagements or significant anniversaries."
+    },
+    {
+      "id": "GJ-003",
+      "name": "Signature Gold Kadha",
+      "category": "men",
+      "type": "Bracelet",
+      "karat": "22KT",
+      "weight": "42g",
+      "price": "₹2,65,000",
+      "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a",
+      "tags": ["men", "gold", "kadha", "bracelet", "traditional"],
+      "featured": true,
+      "description": "A bold and powerful 22KT gold kadha for men, symbolizing strength and status. Features a subtle matte finish with polished highlights."
+    },
+    {
+      "id": "GJ-004",
+      "name": "Twin Souls Bands",
+      "category": "couple",
+      "type": "Rings",
+      "karat": "18KT",
+      "weight": "12g",
+      "price": "₹1,15,000",
+      "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e",
+      "tags": ["couple", "rings", "wedding", "matching", "platinum", "gold"],
+      "featured": true,
+      "description": "Matching 18KT gold bands for those who have found their missing half. An elegant symbol of union and eternal commitment."
+    },
+    {
+      "id": "GJ-005",
+      "name": "Temple Heritage Jhumkas",
+      "category": "women",
+      "type": "Earrings",
+      "karat": "22KT",
+      "weight": "24g",
+      "price": "₹1,58,000",
+      "image": "https://images.unsplash.com/photo-1630139676665-ada0d5d94891",
+      "tags": ["women", "earrings", "jhumka", "temple", "gold", "traditional"],
+      "featured": false,
+      "description": "Traditional temple-style jhumkas featuring divine motifs and a cascading pearl drop. A staple for any festive occasion."
+    },
+    {
+      "id": "GJ-006",
+      "name": "Maharaja Gold Chain",
+      "category": "men",
+      "type": "Chain",
+      "karat": "22KT",
+      "weight": "55g",
+      "price": "₹3,45,000",
+      "image": "https://images.unsplash.com/photo-1611652022419-a9419f74343d",
+      "tags": ["men", "gold", "chain", "heavy", "status"],
+      "featured": false,
+      "description": "A heavy-weight 22KT solid gold chain with a complex link pattern, designed for the man of distinction. Robust yet incredibly refined."
+    },
+    {
+      "id": "GJ-007",
+      "name": "Floral Navratna Necklace",
+      "category": "women",
+      "type": "Necklace",
+      "karat": "22KT",
+      "weight": "48g",
+      "price": "₹3,12,000",
+      "image": "https://images.unsplash.com/photo-1515562141207-7a88fb0ce33e",
+      "tags": ["women", "necklace", "navratna", "colored-stones", "gold"],
+      "featured": false,
+      "description": "Celebrating the power of nature, this 22KT gold necklace features nine precious gemstones in an intricate floral arrangement."
+    },
+    {
+      "id": "GJ-008",
+      "name": "Dapper Gold Cufflinks",
+      "category": "men",
+      "type": "Accessories",
+      "karat": "18KT",
+      "weight": "14g",
+      "price": "₹92,000",
+      "image": "https://images.unsplash.com/photo-1627252817022-de8be87f979d",
+      "tags": ["men", "gold", "accessories", "cufflinks", "professional"],
+      "featured": false,
+      "description": "Classic 18KT gold cufflinks that add a touch of quiet luxury to any tailored suit. The perfect finishing touch for a gentleman."
+    },
+    {
+      "id": "GJ-009",
+      "name": "Infinite Bond Necklace",
+      "category": "couple",
+      "type": "Necklace",
+      "karat": "18KT",
+      "weight": "18g",
+      "price": "₹1,45,000",
+      "image": "https://images.unsplash.com/photo-1596944229583-4903328e12ec",
+      "tags": ["couple", "necklace", "interlocking", "love", "gift"],
+      "featured": false,
+      "description": "Two interlocking circles representing an unbreakable connection. A minimal, modern piece that carries deep sentimental value."
+    },
+    {
+      "id": "GJ-010",
+      "name": "Polki Diamond Choker",
+      "category": "wedding",
+      "type": "Necklace",
+      "karat": "22KT",
+      "weight": "85g",
+      "price": "₹5,20,000",
+      "image": "https://images.unsplash.com/photo-1601121141461-9d6647bca1ed",
+      "tags": ["wedding", "polki", "diamond", "gold", "choker", "luxury"],
+      "featured": false,
+      "description": "Uncut Polki diamonds set in a broad gold choker. This is the definition of royal bridal elegance, designed to be the centerpiece of your wedding ensemble."
+    }
+  ],
+  "categories": [
+    {"id": "men", "name": "Men"},
+    {"id": "wedding", "name": "Wedding"},
+    {"id": "couple", "name": "Couple"},
+    {"id": "women", "name": "Women"}
+  ],
+  "popularSearches": ["Kundan", "Gold Bangles", "Diamond Rings", "Bridal Set", "Men's Kadha", "Couple Bands"]
+}
