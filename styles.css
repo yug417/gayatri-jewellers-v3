@@ -1,38 +1,99 @@
-/* (Full content of styles.css here) */
-/* Reset */
-* { margin:0; padding:0; box-sizing:border-box; }
 :root {
-    --warm-gold: #c9a84c;
-    --deep-navy: #050a15;
-    --near-black: #080e1c;
-    --text-dim: rgba(255,255,255,0.6);
-    --border: rgba(255,255,255,0.1);
-    --bg-card: rgba(255,255,255,0.03);
-    --font-heading: 'Cinzel', serif;
-    --font-body: 'Outfit', sans-serif;
-    --font-luxury: 'Cormorant Garamond', serif;
+    --deep-navy: #050A15;
+    --midnight-blue: #0A0F1E;
+    --warm-gold: #C9A84C;   /* 22K Muted Gold */
+    --bright-gold: #D4AF37; /* Metallic Gold Accent */
+    --champagne: #FAF6EF;   /* Luxury Ivory */
+    --ivory-muted: rgba(250, 246, 239, 0.7);
+    --gold-glow: rgba(201, 168, 76, 0.4);
+    
+    /* Missing Variables Added */
+    --deep-teal: #1A3C40;
+    --ivory: #FAF9F6;
+    --near-black: #0F0F0F;
+    
+    --font-heading: "Cormorant Garamond", serif;
+    --font-body: "Inter", sans-serif;
+    
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 48px;
+    --spacing-xl: 80px;
+    --spacing-xxl: 120px;
 }
 
-body { background: #fff; color: var(--near-black); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-
-/* Standardize Universal Overlays */
-.search-overlay, .wishlist-overlay, .profile-drawer-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000;
-    display: flex; justify-content: flex-end; visibility: hidden; pointer-events: none;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
 }
-.search-overlay.active, .wishlist-overlay.active, .profile-drawer-overlay.active { visibility: visible; pointer-events: auto; }
 
-.search-overlay-backdrop, .wishlist-overlay-backdrop, .profile-drawer-backdrop {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(5, 10, 21, 0.4); backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.6s ease;
+body {
+    font-family: var(--font-body);
+    background-color: var(--champagne);
+    color: var(--deep-navy);
+    line-height: 1.6;
+    overflow-x: hidden;
 }
-.active .search-overlay-backdrop, .active .wishlist-overlay-backdrop, .active .profile-drawer-backdrop { opacity: 1; }
 
-.search-overlay-content, .wishlist-overlay-content, .profile-drawer {
-    position: relative; width: min(500px, 100%); height: 100%; background: #fff;
-    transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.1);
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1.2;
 }
-.active .search-overlay-content, .active .wishlist-overlay-content, .active .profile-drawer { transform: translateX(0); }
 
-/* (rest of the CSS... I'll include the actual full CSS content I have) */
+/* Utilities */
+.divider {
+    width: 60px;
+    height: 1px;
+    background-color: var(--warm-gold);
+    margin: 0 auto;
+    opacity: 0.6;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.4s ease;
+    background: transparent;
+}
+
+.navbar.scrolled {
+    background: rgba(250, 246, 239, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 1rem 3rem;
+}
+
+.nav-left .logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+}
+
+.brand-name {
+    font-family: var(--font-heading);
+    font-size: 1.8rem; /* Slightly larger for a rich feel */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 45%, #B38728 70%, #FBF5B7 85%, #AA771C 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+    white-space: nowrap;
+    transition: all 0.4s ease;
+    text-shadow: none; /* Gradient handles the look */
+}
