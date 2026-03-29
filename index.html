@@ -7,13 +7,10 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body class="home-page theme-premium">
-    <!-- Navbar (Universal) -->
     <nav class="navbar" id="navbar">
-        <div class="nav-left"><a href="index.html" class="logo"><img src="logo.no.bg.png" alt="Gayatri Jewellers" class="brand-logo"><span class="brand-name">Gayatri <span class="gold-text">Jewellers</span></span></a></div>
+        <div class="nav-left"><a href="index.html" class="logo"><img src="logo.no.bg.png" alt="Gayatri Jewellers" class="brand-logo"><span class="brand-name">Gayatri <span style="color:var(--warm-gold);">Jewellers</span></span></a></div>
         <div class="nav-center">
             <a href="index.html" class="nav-link active">Home</a>
             <a href="men.html" class="nav-link">Men</a>
@@ -24,9 +21,30 @@
         </div>
         <div class="nav-right">
             <button class="icon-btn" id="search-trigger"><i class="ph ph-magnifying-glass"></i></button>
-            <button class="icon-btn wishlist-btn" id="wishlist-trigger"><i class="ph ph-heart"></i><span class="badge" id="wishlist-badge">0</span></button>
+            <button class="icon-btn wishlist-btn" id="wishlist-trigger" style="position:relative;"><i class="ph ph-heart"></i><span class="badge" id="wishlist-badge" style="position:absolute; top:-5px; right:-5px; background:var(--warm-gold); color:#000; font-size:0.75rem; width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid #fff; font-weight:700;">0</span></button>
             <button class="icon-btn" id="profile-trigger"><i class="ph ph-user"></i></button>
         </div>
     </nav>
-
-    <!-- (rest of index.html... I'll push the full versions I have) -->
+    <main>
+        <section class="hero">
+            <div class="hero-video-wrapper"><video autoplay muted loop playsinline class="hero-video"><source src="Adobe Express - I_WANT_SPACE_202603272108.mp4" type="video/mp4"></video></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-headline">Royal Excellence. <br>Design Legacy.</h1>
+                <p class="hero-subline">Experience the finest hand-crafted treasures for every royal occasion.</p>
+                <div style="margin-top: 2rem;"><a href="all-collections.html" class="btn-primary shimmer">Discover All Collections</a></div>
+            </div>
+        </section>
+        <!-- Home sections... -->
+    </main>
+    <footer class="footer"><div class="footer-bottom"><p>&copy; 2026 Gayatri Jewellers. All rights reserved.</p></div></footer>
+    <!-- Standard Overlays -->
+    <div class="search-overlay" id="search-overlay"><div class="search-overlay-backdrop"></div><div class="search-overlay-content">...</div></div>
+    <div class="wishlist-overlay" id="wishlist-overlay"><div class="wishlist-overlay-backdrop"></div><div class="wishlist-overlay-content">...</div></div>
+    <div class="profile-drawer-overlay" id="profile-drawer-overlay"><div class="profile-drawer-backdrop"></div><aside class="profile-drawer">...</aside></div>
+    <div class="fly-heart" id="fly-heart" style="position:fixed; display:none; z-index:10002; color:var(--warm-gold); font-size:2rem;"><i class="ph-fill ph-heart"></i></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
