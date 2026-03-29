@@ -112,9 +112,9 @@ h1, h2, h3, h4, h5, h6 {
     height: 44px !important;
     width: 44px !important;
     aspect-ratio: 1 / 1;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 50%;
-    background: var(--deep-navy); /* Luxury Blue Background */
+    background: transparent;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     display: block;
