@@ -151,112 +151,222 @@ window.renderProductDetails = function() {
 
 // 4. TREASURY (WISHLIST) ENGINE
 (function() {
-    const wO = document.getElementById('wishlist-overlay');
-    const wT = document.getElementById('wishlist-trigger') || document.getElementById('wishlist-trigger-sub');
-    const wC = document.getElementById('wishlist-close') || document.querySelector('.wishlist-close');
-    const wG = document.getElementById('wishlist-grid');
-    const totalItemsEl = document.getElementById('wishlist-total-count') || document.getElementById('wishlist-total-items');
-    const totalWeightEl = document.getElementById('wishlist-total-weight');
-    const wBadge = document.getElementById('wishlist-badge') || document.getElementById('wishlist-badge-sub');
+    // ─── Helper: Re-query Essential Wishlist Elements ───
+    function getWishlistElements() {
+        return {
+            wO: document.getElementById('wishlist-overlay'),
+            wT: document.getElementById('wishlist-trigger') || document.getElementById('wishlist-trigger-sub'),
+            wC: document.getElementById('wishlist-close') || document.querySelector('.wishlist-close'),
+            wG: document.getElementById('wishlist-grid'),
+            empty: document.getElementById('wishlist-empty'),
+            itemsCont: document.getElementById('wishlist-items'),
+            footer: document.getElementById('wishlist-footer'),
+            totalItems: document.getElementById('wishlist-total-count') || document.getElementById('wishlist-total-items'),
+            totalWeight: document.getElementById('wishlist-total-weight'),
+            badge: document.getElementById('wishlist-badge') || document.getElementById('wishlist-badge-sub'),
+            inquireBtn: document.getElementById('wishlist-inquire')
+        };
+    }
 
-    window.toggleWishlist = function(id) {
+    // ─── Helper: Sync with Backend ───
+    async function syncWithBackend(items) {
+        const user = JSON.parse(localStorage.getItem('gj_user') || 'null');
+        if (!user || !user.phone) return;
+        
+        try {
+            await fetch(`${window.API_BASE}/api/wishlist/${user.phone}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: items })
+            });
+        } catch (e) {
+            console.warn("Backend sync deferred (Offline).");
+        }
+    }
+
+    window.toggleWishlist = async function(id) {
         if (!id) return;
         let wl = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
         const idx = wl.findIndex(i => i.id === id);
+        
         if (idx > -1) {
             wl.splice(idx, 1);
-            showToast('Piece removed from treasury');
+            showToast('Piece removed from your curated gallery.');
         } else {
             let p = (window.GLOBAL_PRODUCTS || []).find(prod => prod.id === id);
             if (!p) {
                 const card = document.querySelector(`[data-product-id="${id}"]`);
-                if (card) p = { id, name: card.querySelector('.p-title, .product-name')?.textContent || "Masterpiece", image: card.querySelector('.p-img, .product-img')?.src || "", image: card.querySelector('.p-img, .product-img')?.src || "", karat: card.querySelector('.p-pill, .purity-badge')?.textContent || "22KT", weight: card.querySelector('.p-wt, .product-weight')?.textContent || "Purity", price: card.querySelector('.p-price')?.textContent || "Request Price" };
+                if (card) p = { 
+                    id, 
+                    name: card.querySelector('.p-title, .product-name')?.textContent || "Masterpiece", 
+                    image: card.querySelector('.p-img, .product-img')?.src || "", 
+                    karat: card.querySelector('.p-pill, .purity-badge')?.textContent || "22KT", 
+                    weight: card.querySelector('.p-wt, .product-weight')?.textContent || "0g"
+                };
             }
             if (p) {
-                wl.push({ id: p.id, name: p.name, img: p.image || p.img, karat: p.karat, weight: p.weight, price: p.price });
-                showToast('Masterpiece added to treasury');
+                wl.push({ id: p.id, name: p.name, img: p.image || p.img, karat: p.karat, weight: p.weight });
+                showToast('Added to your curated gallery!');
                 if(window.animateFlyHeart) window.animateFlyHeart(document.querySelector(`[data-product-id="${id}"]`));
-            } else { showToast('Unable to store piece.'); }
+            } else { 
+                showToast('Unable to capture piece details.'); 
+            }
         }
+        
         localStorage.setItem('gj_wishlist', JSON.stringify(wl));
         window.syncWishlistUI();
-        if (wO && wO.classList.contains('active')) window.renderWishlist();
+        syncWithBackend(wl);
         
-        // Update product detail page specifically if we're on it
-        if (window.location.pathname.includes('product-detail.html')) {
-            const detailBtn = document.getElementById('detail-wish-btn');
-            if(detailBtn) {
-               const isIn = wl.some(i => i.id === id);
-               detailBtn.innerHTML = isIn ? '<i class="ph-fill ph-heart"></i> Remove from Wishlist' : '<i class="ph ph-heart"></i> Add to Wishlist';
-               detailBtn.classList.toggle('active', isIn);
-            }
+        const els = getWishlistElements();
+        if (els.wO && els.wO.classList.contains('active')) window.renderWishlist();
+        
+        const detailBtn = document.getElementById('detail-wish-btn');
+        if(detailBtn) {
+            const isIn = wl.some(i => i.id === id);
+            detailBtn.innerHTML = isIn ? '<i class="ph-fill ph-heart"></i> In Your Selection' : '<i class="ph ph-heart"></i> Add to Selection';
+            detailBtn.classList.toggle('active', isIn);
         }
     };
 
     window.syncWishlistUI = function() {
         const wl = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
-        if (wBadge) wBadge.textContent = wl.length;
+        const els = getWishlistElements();
+        if (els.badge) els.badge.textContent = wl.length;
+        
         const pBadge = document.getElementById('profile-wishlist-count');
         if (pBadge) pBadge.textContent = wl.length;
-        document.querySelectorAll('.wish-btn, .wishlist-add').forEach(btn => {
-            const pid = btn.closest('[data-product-id]')?.dataset.productId;
-            const icon = btn.querySelector('i');
-            if (pid && icon) {
+        
+        document.querySelectorAll('.wish-btn, .wishlist-add, .detail-wishlist-toggle').forEach(btn => {
+            let pid = btn.closest('[data-product-id]')?.dataset.productId;
+            if(!pid) {
+                const params = new URLSearchParams(window.location.search);
+                pid = params.get('id');
+            }
+            if (pid) {
                 const isIn = wl.some(i => i.id === pid);
-                icon.className = isIn ? 'ph-fill ph-heart' : 'ph ph-heart';
-                if(btn.classList.contains('wish-btn')) btn.classList.toggle('active', isIn);
+                const icon = btn.querySelector('i');
+                if(icon) icon.className = isIn ? 'ph-fill ph-heart' : 'ph ph-heart';
+                btn.classList.toggle('active', isIn);
             }
         });
     };
 
     window.renderWishlist = function() {
-        if (!wG) return;
+        const els = getWishlistElements();
+        if (!els.wG) return;
+        
         const wl = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
         if (wl.length === 0) {
-            wG.innerHTML = '<div style="padding:40px; text-align:center; opacity:0.3;"><i class="ph ph-hand-heart" style="font-size:3rem; display:block; margin-bottom:10px;"></i><p>Your treasury is empty.</p></div>';
-            if (totalItemsEl) totalItemsEl.textContent = '0 pieces';
-            if (totalWeightEl) totalWeightEl.textContent = '0g total weight';
+            if (els.empty) els.empty.style.display = 'block';
+            if (els.itemsCont) els.itemsCont.style.display = 'none';
+            if (els.footer) els.footer.style.display = 'none';
             return;
         }
-        wG.innerHTML = wl.map((item, i) => `
-            <div class="wishlist-item" onclick="window.location.href='product-detail.html?id=${item.id}'" style="display:flex; align-items:center; gap:20px; padding:15px; background:rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.03); border-radius:15px; margin-bottom:15px; cursor:pointer; animation: fadeInUp 0.4s ease both; animation-delay: ${i*0.1}s;">
-                <img src="${item.img}" style="width:70px; height:70px; object-fit:cover; border-radius:12px;">
-                <div style="flex:1;">
-                    <div style="font-family:var(--font-heading); font-weight:700; color:var(--deep-navy);">${item.name}</div>
-                    <div style="font-size:0.8rem; color:var(--warm-gold); font-weight:600;">${item.karat} | ${item.weight}</div>
+
+        if (els.empty) els.empty.style.display = 'none';
+        if (els.itemsCont) els.itemsCont.style.display = 'block';
+        if (els.footer) els.footer.style.display = 'block';
+
+        els.wG.innerHTML = wl.map((item, i) => `
+            <div class="wishlist-item-card" style="animation: fadeInUp 0.5s ease both; animation-delay: ${i*0.08}s">
+                <div class="wi-img-wrap" onclick="window.location.href='product-detail.html?id=${item.id}'">
+                    <img src="${item.img || item.image}" alt="${item.name}" class="wi-img">
                 </div>
-                <button onclick="event.stopPropagation(); window.toggleWishlist('${item.id}')" style="background:none; border:none; cursor:pointer; color:var(--text-dim);"><i class="ph ph-trash"></i></button>
+                <div class="wi-info" onclick="window.location.href='product-detail.html?id=${item.id}'">
+                    <h4 class="wi-name">${item.name}</h4>
+                    <p class="wi-meta">${item.karat} • ${item.weight}</p>
+                </div>
+                <button class="wi-remove" onclick="event.stopPropagation(); window.toggleWishlist('${item.id}')" title="Remove Item">
+                    <i class="ph ph-trash"></i>
+                </button>
             </div>
         `).join('');
-        let tw = 0; wl.forEach(i => tw += parseFloat(i.weight) || 0);
-        if (totalItemsEl) totalItemsEl.textContent = `${wl.length} pieces`;
-        if (totalWeightEl) totalWeightEl.textContent = `${tw.toFixed(1)}g total weight`;
+
+        let totalWeight = 0;
+        wl.forEach(item => {
+            const w = parseFloat(item.weight) || 0;
+            totalWeight += w;
+        });
+
+        if (els.totalItems) els.totalItems.textContent = `${wl.length} Pieces`;
+        if (els.totalWeight) els.totalWeight.textContent = `${totalWeight.toFixed(2)}g Est.`;
+
+        if (els.inquireBtn) {
+            const itemNames = wl.map(it => it.name).join(', ');
+            els.inquireBtn.onclick = () => {
+                const message = encodeURIComponent(`Hello Gayatri Jewellers, I'm interested in these pieces from my curated selection: ${itemNames}. Please let me know more. `);
+                window.open(`https://wa.me/918181823950?text=${message}`, '_blank');
+            };
+        }
     };
 
     function showToast(m) {
         let t = document.getElementById('gj-toast');
-        if(!t){ t=document.createElement('div'); t.id='gj-toast'; t.style="position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:rgba(5, 10, 21, 0.9); color:white; padding:15px 30px; border-radius:50px; z-index:10001; box-shadow:0 15px 40px rgba(0,0,0,0.4); transition:all 0.4s cubic-bezier(0.19, 1, 0.22, 1); opacity:0; pointer-events:none; border:1px solid rgba(201,168,76,0.3); backdrop-filter:blur(10px); font-weight:600;"; document.body.appendChild(t); }
+        if(!t){ t=document.createElement('div'); t.id='gj-toast'; t.className='toast'; document.body.appendChild(t); }
         t.textContent = m; t.style.opacity = '1'; t.style.bottom = '40px';
         setTimeout(() => { t.style.opacity = '0'; t.style.bottom = '30px'; }, 3000);
     }
-    if (wT) wT.addEventListener('click', () => { window.renderWishlist(); if(wO) wO.classList.add('active'); });
-    if (wC) wC.addEventListener('click', () => wO.classList.remove('active'));
     
-    // Backdrop click handlers
-    document.querySelectorAll('.search-overlay-backdrop, .wishlist-overlay-backdrop, .profile-drawer-backdrop').forEach(bd => {
+    // Initial Bindings
+    const els = getWishlistElements();
+    if (els.wT) els.wT.addEventListener('click', () => { window.renderWishlist(); if(els.wO) els.wO.classList.add('active'); });
+    if (els.wC) els.wC.addEventListener('click', () => { if(els.wO) els.wO.classList.remove('active'); });
+    
+    document.querySelectorAll('.wishlist-overlay-backdrop').forEach(bd => {
         bd.addEventListener('click', () => {
-            document.querySelectorAll('.search-overlay.active, .wishlist-overlay.active, .profile-drawer-overlay.active').forEach(ov => ov.classList.remove('active'));
+            const wO = document.getElementById('wishlist-overlay');
+            if(wO) wO.classList.remove('active');
         });
     });
 
     window.animateFlyHeart = function(from) {
-        const fh = document.getElementById('fly-heart'); const to = wT;
+        const fh = document.getElementById('fly-heart'); 
+        const els = getWishlistElements();
+        const to = els.wT;
         if(!fh || !to || !from) return;
         const fr = from.getBoundingClientRect(); const tr = to.getBoundingClientRect();
         fh.style.left = `${fr.left}px`; fh.style.top = `${fr.top}px`;
         fh.style.display = 'block'; fh.style.opacity = '1';
-        setTimeout(() => { fh.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)'; fh.style.left = `${tr.left}px`; fh.style.top = `${tr.top}px`; fh.style.transform = 'scale(0.2) rotate(20deg)'; fh.style.opacity = '0'; setTimeout(() => { fh.style.display = 'none'; fh.style.transition = ''; fh.style.transform = ''; }, 800); }, 50);
+        setTimeout(() => { 
+            fh.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)'; 
+            fh.style.left = `${tr.left}px`; fh.style.top = `${tr.top}px`; 
+            fh.style.transform = 'scale(0.2) rotate(20deg)'; 
+            fh.style.opacity = '0'; 
+            setTimeout(() => { fh.style.display = 'none'; fh.style.transition = ''; fh.style.transform = ''; }, 800); 
+        }, 50);
     };
+
+    // Global Delegated Listener for Wishlist Buttons
+    document.addEventListener('click', e => {
+        const btn = e.target.closest('.wish-btn, .wishlist-add, .detail-wishlist-toggle');
+        if (btn) {
+            e.preventDefault(); e.stopPropagation();
+            let pid = btn.dataset.productId || btn.closest('[data-product-id]')?.dataset.productId;
+            if(!pid) { const params = new URLSearchParams(window.location.search); pid = params.get('id'); }
+            if (pid) window.toggleWishlist(pid);
+        }
+    });
+
+    // User Login Sync: If user logs in, pull their wishlist from DB
+    window.syncUserWishlistFromBackend = async function(phone) {
+        if(!phone) return;
+        try {
+            const res = await fetch(`${window.API_BASE}/api/wishlist/${phone}`);
+            if(res.ok) {
+                const items = await res.json();
+                if(items && Array.isArray(items) && items.length > 0) {
+                    // Merge or replace? Let's merge and deduplicate
+                    let localWl = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
+                    const combined = [...localWl];
+                    items.forEach(newItem => {
+                        if(!combined.some(i => i.id === newItem.id)) combined.push(newItem);
+                    });
+                    localStorage.setItem('gj_wishlist', JSON.stringify(combined));
+                    window.syncWishlistUI();
+                }
+            }
+        } catch(e) {}
+    }
 })();
 
 // 5. SEARCH & PROFILE LOGIC
@@ -392,7 +502,11 @@ window.renderProductDetails = function() {
                         const d = await r.json(); if (r.ok) u = d.user;
                     } catch (err) { u = { id: 'LOCAL-'+Date.now(), name, phone }; }
                 }
-                if(u){ saveS(u); showL(u); }
+                if(u){ 
+                    saveS(u); 
+                    showL(u); 
+                    if(window.syncUserWishlistFromBackend) window.syncUserWishlistFromBackend(u.phone);
+                }
             } finally { if(lBtn) lBtn.disabled = false; }
         });
     }
@@ -404,7 +518,15 @@ window.renderProductDetails = function() {
     if (exU) {
         showL(exU);
         if (window.getProfileFromSupabase && exU.phone) {
-            window.getProfileFromSupabase(exU.phone).then(u => { if(u){ saveS(u); showL(u); } });
+            window.getProfileFromSupabase(exU.phone).then(u => { 
+                if(u){ 
+                    saveS(u); 
+                    showL(u); 
+                    if(window.syncUserWishlistFromBackend) window.syncUserWishlistFromBackend(u.phone);
+                } 
+            });
+        } else if (exU.phone && window.syncUserWishlistFromBackend) {
+            window.syncUserWishlistFromBackend(exU.phone);
         }
     }
 })();
