@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gayatri Jewellers | Quality • Trust • Purity</title>
-    <meta name="description"
-        content="Gayatri Jewellers - 25 years trusted expertise. 100% Hallmarked Gold jewellery in Chhatrapati Sambhajinagar.">
-
-    <!-- Fonts -->
+    <title>Gayatri Jewellers | Artisanal Luxury Heritage</title>
+    <link rel="stylesheet" href="/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-
-    <!-- Phosphor Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Chart.js for Gold Rate Chart -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .shop-slides-container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        .shop-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .shop-slide.active { opacity: 1; z-index: 1; }
+        .slide-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+        .slide-overlay { position: absolute; z-index: 2; text-align: center; color: #fff; max-width: 900px; padding: 20px; }
+        .slide-subtitle { display: block; font-size: 0.8rem; letter-spacing: 5px; color: var(--warm-gold); text-transform: uppercase; margin-bottom: 20px; animation: fadeInUp 0.8s both; }
+        .slide-title { font-family: 'Cinzel', serif; font-size: clamp(3rem, 7vw, 6rem); line-height: 1; margin-bottom: 30px; animation: fadeInUp 0.8s 0.2s both; }
+    </style>
 </head>
+<body data-category="home">
 
-<body>
+    <!-- Preloader -->
+    <div id="preloader" style="position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.8s ease;">
+        <div style="text-align: center;">
+            <div style="width: 60px; height: 60px; border: 2px solid var(--warm-gold); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="color: #fff; margin-top: 20px; letter-spacing: 4px; font-family: 'Cinzel', serif; font-size: 0.7rem; text-transform: uppercase;">Gayatri Jewellers</p>
+        </div>
+    </div>
 
-    <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="nav-left">
-            <a href="#" class="logo">
-                <img src="/logo.bg.png" alt="Gayatri Jewellers Logo" class="brand-logo">
-                <span class="brand-name">Gayatri Jewellers</span>
+            <a href="/index.html" class="logo">
+                <img src="/logo.bg.png" alt="Gayatri Jewellers" class="brand-logo">
+                <span class="brand-name">Gayatri <span style="color: var(--warm-gold);">Jewellers</span></span>
             </a>
         </div>
         <div class="nav-center">
-            <a href="#hero" class="nav-link active">Home</a>
+            <a href="/index.html" class="nav-link active">Home</a>
             <a href="/men.html" class="nav-link">Men</a>
             <a href="/wedding.html" class="nav-link">Wedding</a>
             <a href="/couple.html" class="nav-link">Couple</a>
@@ -44,629 +60,268 @@
         </div>
         <div class="nav-right">
             <button class="icon-btn" id="search-trigger" aria-label="Search"><i class="ph ph-magnifying-glass"></i></button>
-            <button class="icon-btn wishlist-btn" id="wishlist-trigger" aria-label="Wishlist">
+            <button class="icon-btn wishlist-btn" id="wishlist-trigger" style="position: relative;" aria-label="Wishlist">
                 <i class="ph ph-heart"></i>
-                <span class="badge" id="wishlist-badge">0</span>
+                <span class="badge" id="wishlist-badge" style="position:absolute; top:-5px; right:-5px; background:var(--warm-gold); color:#000; font-size:0.7rem; width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">0</span>
             </button>
             <button class="icon-btn" id="profile-trigger" aria-label="Profile"><i class="ph ph-user"></i></button>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="hero">
-        <div class="hero-video-wrapper">
-            <video autoplay muted loop playsinline class="hero-video">
-                <source src="/hero-background.mp4" type="video/mp4">
-            </video>
-            <div class="hero-overlay"></div>
-            <div class="hero-grain"></div>
-        </div>
-
-
-        <div class="hero-content">
-            <h1 class="hero-headline">Crafted in gold, worn with pride</h1>
-            <p class="hero-subline">25 Years of Trust • 100% Hallmarked Quality</p>
-        </div>
-
-
-    </section>
-
-
-    <!-- CATEGORIES SECTION -->
-    <div class="divider"></div>
-    <section class="categories-section reveal" id="categories">
-        <div class="categories-grid">
-            <a href="/men.html" class="category-card" style="text-decoration: none;">
-                <img src="/men_minimal_gold.png" alt="Men's Minimal Collection" class="category-img">
-                <div class="category-overlay">
-                    <h3 class="category-name">Men</h3>
-                    <span class="category-cta">Discover <i class="ph-bold ph-caret-right"></i></span>
-                </div>
-            </a>
-            <a href="/wedding.html" class="category-card" style="text-decoration: none;">
-                <img src="/wedding_collection.png" alt="Royal Wedding Collection" class="category-img">
-                <div class="category-overlay">
-                    <h3 class="category-name">Wedding</h3>
-                    <span class="category-cta">Discover <i class="ph-bold ph-caret-right"></i></span>
-                </div>
-            </a>
-            <a href="/couple.html" class="category-card" style="text-decoration: none;">
-                <img src="/couple_collection.png" alt="Couple's Minimal Gold Collection" class="category-img">
-                <div class="category-overlay">
-                    <h3 class="category-name">Couple</h3>
-                    <span class="category-cta">Discover <i class="ph-bold ph-caret-right"></i></span>
-                </div>
-            </a>
-            <a href="/women.html" class="category-card" style="text-decoration: none;">
-                <img src="/women_collection.png" alt="Women's Luxury Gold Collection" class="category-img">
-                <div class="category-overlay">
-                    <h3 class="category-name">Women</h3>
-                    <span class="category-cta">Discover <i class="ph-bold ph-caret-right"></i></span>
-                </div>
-            </a>
-        </div>
-    </section>
-    <div class="divider"></div>
-    <!-- BEST SELLERS / COLLECTIONS -->
-    <section class="best-sellers reveal" id="collections">
-        <div class="section-header">
-            <h5 class="section-subtitle">Exclusivity</h5>
-            <h2 class="section-title">Our Finest Pieces</h2>
-        </div>
-
-        <div class="horizontal-scroll-container">
-            <div class="scroll-track" id="scroll-track">
-                <!-- Card 1 -->
-                <div class="product-card large-card" data-product-id="GJ-001" data-product-name="Royal Kundan Bridal Set" data-product-img="filter_bridal_gold_1774681269431.png" data-product-weight="124g" data-product-karat="22KT" data-product-type="Necklace Set" onclick="window.location.href='/product-detail.html?id=GJ-001'">
-                    <div class="card-image-wrap">
-                        <img src="/filter_bridal_gold_1774681269431.png" alt="Bridal Necklace"
-                            class="product-img">
-                        <button class="wishlist-add" onclick="event.stopPropagation(); window.toggleWishlist('GJ-001')"><i class="ph ph-heart"></i></button>
-                        <div class="purity-badge">22KT</div>
-                    </div>
-                    <div class="card-info">
-                        <h3 class="product-name">Royal Kundan Bridal Set</h3>
-                        <p class="product-weight">124g</p>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="product-card" data-product-id="GJ-002" data-product-name="Eternity Diamond Ring" data-product-img="filter_ring_gold_1774681230674.png" data-product-weight="8g" data-product-karat="18KT" data-product-type="Ring" onclick="window.location.href='/product-detail.html?id=GJ-002'">
-                    <div class="card-image-wrap">
-                        <img src="/filter_ring_gold_1774681230674.png" alt="Diamond Ring"
-                            class="product-img">
-                        <button class="wishlist-add" onclick="event.stopPropagation(); window.toggleWishlist('GJ-002')"><i class="ph ph-heart"></i></button>
-                        <div class="purity-badge">18KT</div>
-                    </div>
-                    <div class="card-info">
-                        <h3 class="product-name">Eternity Diamond Ring</h3>
-                        <p class="product-weight">8g</p>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="product-card large-card" data-product-id="GJ-003" data-product-name="Traditional Gold Bangles Set" data-product-img="filter_kada_gold_1774681324265.png" data-product-weight="45g" data-product-karat="22KT" data-product-type="Bangles" onclick="window.location.href='/product-detail.html?id=GJ-003'">
-                    <div class="card-image-wrap">
-                        <img src="/filter_kada_gold_1774681324265.png" alt="Gold Bangles"
-                            class="product-img">
-                        <button class="wishlist-add" onclick="event.stopPropagation(); window.toggleWishlist('GJ-003')"><i class="ph ph-heart"></i></button>
-                        <div class="purity-badge">22KT</div>
-                    </div>
-                    <div class="card-info">
-                        <h3 class="product-name">Traditional Gold Bangles Set</h3>
-                        <p class="product-weight">45g</p>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="product-card" data-product-id="GJ-004" data-product-name="Classic Mangalsutra" data-product-img="filter_mangalsutra_gold_1774681305415.png" data-product-weight="18g" data-product-karat="22KT" data-product-type="Mangalsutra" onclick="window.location.href='/product-detail.html?id=GJ-004'">
-                    <div class="card-image-wrap">
-                        <img src="/filter_mangalsutra_gold_1774681305415.png" alt="Mangalsutra"
-                            class="product-img">
-                        <button class="wishlist-add" onclick="event.stopPropagation(); window.toggleWishlist('GJ-004')"><i class="ph ph-heart"></i></button>
-                        <div class="purity-badge">22KT</div>
-                    </div>
-                    <div class="card-info">
-                        <h3 class="product-name">Classic Mangalsutra</h3>
-                        <p class="product-weight">18g</p>
-                    </div>
+    <main>
+        <!-- Dynamic Hero Slider -->
+        <section class="shop-slides-container">
+            <div class="shop-slide active">
+                <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" class="slide-bg" alt="Jewellery">
+                <div class="slide-overlay">
+                    <span class="slide-subtitle">Defining Artisanal Luxury</span>
+                    <h1 class="slide-title">Heritage Reborn</h1>
+                    <a href="/all-collections.html" class="btn-primary">View Curated Gallery</a>
                 </div>
             </div>
-        </div>
-        <div class="scroll-progress-container">
-            <div class="scroll-progress-bar" id="scroll-progress"></div>
-        </div>
-
-        <div class="view-all-wrapper">
-            <a href="/all-collections.html" class="btn-primary shimmer">Shop All Masterpieces</a>
-        </div>
-    </section>
-
-    <!-- SECTION DIVIDER -->
-    <div class="divider"></div>
-
-    <!-- GOLD RATE TICKER SECTION -->
-    <section class="gold-rate-section reveal" id="gold-rate">
-        <div class="section-header center">
-            <h2 class="section-title">Today's Gold Rate <span class="date-label">(28/03/2026)</span> <span class="live-dot"></span></h2>
-            <p class="section-subtitle">Real-time market updates</p>
-        </div>
-
-        <div class="rate-cards-container">
-            <div class="rate-card">
-                <div class="karat-badge">24KT <span class="purity">(999)</span></div>
-                <div class="price" id="rate-24-1g">₹14,471 <span class="per-unit">/ 1g</span></div>
-                <div class="price-10g" id="rate-24-10g">₹1,44,710 / 10g</div>
+            <div class="shop-slide">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" class="slide-bg" alt="Diamonds">
+                <div class="slide-overlay">
+                    <span class="slide-subtitle">Timeless Brilliance</span>
+                    <h1 class="slide-title">Ethereal Diamonds</h1>
+                    <a href="/women.html" class="btn-primary">Explore Gems</a>
+                </div>
             </div>
-            <div class="rate-card highlight">
-                <div class="karat-badge">22KT <span class="purity">(916)</span></div>
-                <div class="price" id="rate-22-1g">₹13,265 <span class="per-unit">/ 1g</span></div>
-                <div class="price-10g" id="rate-22-10g">₹1,32,650 / 10g</div>
-            </div>
-            <div class="rate-card">
-                <div class="karat-badge">18KT <span class="purity">(750)</span></div>
-                <div class="price" id="rate-18-1g">₹10,853 <span class="per-unit">/ 1g</span></div>
-                <div class="price-10g" id="rate-18-10g">₹1,08,530 / 10g</div>
-            </div>
-            <div class="rate-card">
-                <div class="karat-badge">14KT <span class="purity">(585)</span></div>
-                <div class="price" id="rate-14-1g">₹8,441 <span class="per-unit">/ 1g</span></div>
-                <div class="price-10g" id="rate-14-10g">₹84,410 / 10g</div>
-            </div>
-        </div>
+        </section>
 
-        <div class="chart-wrapper" style="height: 380px; margin-top: 40px; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-card); position: relative; padding: 40px 0 0 0;">
-            <!-- Custom Gayatri Trend Graph (Built for Simplicity & Look) -->
-            <div style="position: absolute; inset: 0; padding: 40px 0 60px 0;">
-                <svg viewBox="0 0 1000 300" style="width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));">
-                    <defs>
-                        <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:rgba(212, 175, 55, 0.15);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:rgba(0,0,0,0);stop-opacity:0" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Trend Area -->
-                    <path d="M0,250 L100,240 L200,245 L300,220 L400,230 L500,200 L600,190 L700,170 L800,180 L900,150 L1000,130 L1000,300 L0,300 Z" fill="url(/#grad)" />
-                    <!-- Trend Line -->
-                    <path d="M0,250 L100,240 L200,245 L300,220 L400,230 L500,200 L600,190 L700,170 L800,180 L900,150 L1000,130" 
-                          fill="none" stroke="#d4af37" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                    <!-- Current Marker -->
-                    <circle cx="1000" cy="130" r="6" fill="#d4af37">
-                        <animate attributeName="r" values="6;9;6" dur="2s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
+        <!-- Shop By Category Cards -->
+        <section class="section-padding">
+            <div class="section-header reveal">
+                <span class="section-label">Our Universe</span>
+                <h2 class="section-title">Shop by Collection</h2>
             </div>
             
-            <div style="position:absolute; bottom:20px; right:30px; display:flex; gap:20px; font-size:0.7rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px;">
-                <span>• 1 Month View</span>
-                <span>• Bullish Market</span>
+            <div class="collection-grid">
+                <a href="/wedding.html" class="collection-card reveal">
+                    <img src="https://images.unsplash.com/photo-1599643478514-4a1101859187" alt="Wedding" class="collection-img">
+                    <div class="collection-overlay">
+                        <span class="col-label">Bespoke Bridal</span>
+                        <h3 class="col-name">Wedding</h3>
+                        <div class="col-arrow"><i class="ph ph-arrow-right"></i></div>
+                    </div>
+                </a>
+                <a href="/men.html" class="collection-card reveal">
+                    <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a" alt="Men" class="collection-img">
+                    <div class="collection-overlay">
+                        <span class="col-label">Bold & Sophisticated</span>
+                        <h3 class="col-name">Men</h3>
+                        <div class="col-arrow"><i class="ph ph-arrow-right"></i></div>
+                    </div>
+                </a>
+                <a href="/women.html" class="collection-card reveal">
+                    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908" alt="Women" class="collection-img">
+                    <div class="collection-overlay">
+                        <span class="col-label">Grace & Aura</span>
+                        <h3 class="col-name">Women</h3>
+                        <div class="col-arrow"><i class="ph ph-arrow-right"></i></div>
+                    </div>
+                </a>
+                <a href="/couple.html" class="collection-card reveal">
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e" alt="Couple" class="collection-img">
+                    <div class="collection-overlay">
+                        <span class="col-label">Unified Hearts</span>
+                        <h3 class="col-name">Couple</h3>
+                        <div class="col-arrow"><i class="ph ph-arrow-right"></i></div>
+                    </div>
+                </a>
             </div>
+        </section>
 
-            <div style="position:absolute; bottom:20px; left:30px; display:flex; align-items:center; gap:10px; opacity:0.6;">
-                <div class="live-dot" style="width:8px; height:8px;"></div>
-                <span style="font-size:0.75rem; letter-spacing:2px; text-transform:uppercase;">Trend Source: MCX GOLD (Boutique Analytics)</span>
-            </div>
-        </div>
-        <p class="rate-disclaimer">Rates updated daily. For exact pricing and making charges, please contact us.</p>
-    </section>
-
-    <!-- ABOUT & STORE INFO -->
-    <section class="about-section reveal" id="about">
-        <div class="about-grid">
-            <div class="about-content">
-                <h2 class="section-title">About Gayatri Jewellers</h2>
-                <h3 class="about-subtitle">25 Years of Unwavering Trust</h3>
-                <p class="about-body">
-                    Founded on the principles of purity and transparency, Gayatri Jewellers has been Chhatrapati
-                    Sambhajinagar's most trusted family jeweller for over two decades.
-                    We believe jewellery is more than an adornment—it is a legacy passed through generations.
-                </p>
-                <p class="about-body">
-                    Specializing in 100% Hallmarked Gold, we craft exquisite pieces for every occasion, blending
-                    traditional Maharashtrian artistry with contemporary elegance.
-                </p>
-            </div>
-
-            <div class="visit-card">
-                <div class="map-thumbnail" id="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.389445831558!2d75.35475!3d19.865774199999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdba2896ae0c93f%3A0x6210a72bd6fe8fad!2sGayatri%20Jewellers!5e0!3m2!1sen!2sin!4v1774679590000!5m2!1sen!2sin"
-                        class="map-iframe"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Gayatri Jewellers Location">
-                    </iframe>
-                    <a href="https://maps.app.goo.gl/hDVG9jEp2ccyBE3F9" 
-                       target="_blank" 
-                       rel="noopener"
-                       class="map-overlay-link"
-                       id="map-link">
-                        <div class="map-overlay-hover">
-                            <div class="map-pulse-dot"></div>
-                            <span class="map-hover-text"><i class="ph ph-navigation-arrow"></i> Open in Google Maps</span>
-                        </div>
-                    </a>
-                    <div class="visit-label">Visit Our Store</div>
+        <!-- Featured Scroll Track -->
+        <section class="featured-scroll">
+            <div class="scroll-header">
+                <div class="reveal">
+                    <span class="section-label" style="color: var(--soft-cream); opacity: 0.6;">Curated Pieces</span>
+                    <h2 class="section-title" style="color: #fff; font-size: 2.5rem;">Season's Masterpieces</h2>
                 </div>
+                <a href="/all-collections.html" class="nav-link" style="color: #fff;">Explore All <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="scroll-track" id="scroll-track">
+                <!-- Products dynamically loaded by script.js -->
+            </div>
+        </section>
 
-                <div class="store-details">
-                    <div class="detail-row">
-                        <i class="ph ph-map-pin-line"></i>
-                        <span>Pundlik Nagar Rd, near Chatrapati Shivaji Maharaj Road, Ganesh Nagar, Husain Colony, Nyay
-                            Nagar, Chhatrapati Sambhajinagar, Maharashtra 431009</span>
-                    </div>
-                    <div class="detail-row">
-                        <i class="ph ph-clock"></i>
-                        <span>Mon–Sat: 10:00 AM – 8:00 PM<br>Sunday: Closed</span>
-                    </div>
-                    <div class="detail-row">
-                        <i class="ph ph-phone"></i>
-                        <a href="https://wa.me/918181823950" class="phone-link" target="_blank">+91 81818 23950</a>
-                    </div>
-                    <a href="https://maps.app.goo.gl/hDVG9jEp2ccyBE3F9"
-                       target="_blank"
-                       rel="noopener"
-                       class="directions-btn">
-                        <i class="ph ph-navigation-arrow"></i>
-                        Get Directions
-                    </a>
+        <!-- Gold Rate Ticker -->
+        <section class="gold-rates-section" style="background: #fff; padding: 40px 0; border-top: 1px solid #eee;">
+            <div class="rates-container" style="display: flex; justify-content: center; gap: 60px; overflow-x: auto; padding: 0 40px;">
+                <div class="rate-item" style="text-align: center;">
+                    <span style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 2px;">24KT Gold</span>
+                    <div id="rate-24-1g" style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.2rem;">₹0,000 <span style="font-size: 0.8rem; font-weight: 400; opacity: 0.5;">/ 1g</span></div>
+                </div>
+                <div class="rate-item" style="text-align: center;">
+                    <span style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 2px;">22KT Gold</span>
+                    <div id="rate-22-1g" style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.2rem;">₹0,000 <span style="font-size: 0.8rem; font-weight: 400; opacity: 0.5;">/ 1g</span></div>
+                </div>
+                <div class="rate-item" style="text-align: center;">
+                    <span style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 2px;">18KT Gold</span>
+                    <div id="rate-18-1g" style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.2rem;">₹0,000 <span style="font-size: 0.8rem; font-weight: 400; opacity: 0.5;">/ 1g</span></div>
                 </div>
             </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; margin-bottom: 80px;">
+            <div class="footer-brand">
+                <h3 style="font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 20px;">Gayatri <span style="color: var(--warm-gold);">Jewellers</span></h3>
+                <p style="opacity: 0.6; max-width: 350px; line-height: 1.8;">Carrying forward a legacy of trust and fine craftsmanship. Every piece at Gayatri Jewellers is a testament to timeless elegance and superior artistry.</p>
+            </div>
+            <div class="footer-links">
+                <h4 style="color: var(--warm-gold); margin-bottom: 25px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Collections</h4>
+                <div style="display: flex; flex-direction: column; gap: 12px; opacity: 0.8;">
+                    <a href="/wedding.html" style="color: #fff; text-decoration: none;">Bridal Wear</a>
+                    <a href="/men.html" style="color: #fff; text-decoration: none;">Gentlemen</a>
+                    <a href="/women.html" style="color: #fff; text-decoration: none;">Artisanal Gems</a>
+                    <a href="/couple.html" style="color: #fff; text-decoration: none;">Couple Bands</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4 style="color: var(--warm-gold); margin-bottom: 25px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Boutique</h4>
+                <div style="display: flex; flex-direction: column; gap: 12px; opacity: 0.8;">
+                    <a href="#" style="color: #fff; text-decoration: none;">Our Story</a>
+                    <a href="#" style="color: #fff; text-decoration: none;">Craftsmanship</a>
+                    <a href="#" style="color: #fff; text-decoration: none;">Book Appointment</a>
+                    <a href="/owner.html" style="color: #fff; text-decoration: none;">Owner Access</a>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <h4 style="color: var(--warm-gold); margin-bottom: 25px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Visit Us</h4>
+                <p style="opacity: 0.6; margin-bottom: 20px;">123 Luxury Avenue, Golden Plaza,<br>Raipur, Chhattisgarh - 492001</p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="color: #fff; font-size: 1.2rem;"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="#" style="color: #fff; font-size: 1.2rem;"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#" style="color: #fff; font-size: 1.2rem;"><i class="ph ph-whatsapp-logo"></i></a>
+                </div>
+            </div>
         </div>
-    </section>
-
-    <!-- LUXURY SOCIAL BAR -->
-    <section class="social-luxury-bar">
-        <div class="luxury-quote">
-            "Gold is the only language the world understands—let your legacy speak in brilliance."
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; text-align: center;">
+            <p style="opacity: 0.4; font-size: 0.8rem;">&copy; 2026 Gayatri Jewellers. All rights reserved. | <a href="/privacy.html" style="color: inherit;">Privacy Policy</a></p>
         </div>
-        <div class="social-info-line">
-            <a href="https://www.instagram.com/gayatri.jewellers?igsh=aGw2dmVjdHU5b3Vv" target="_blank" class="social-luxury-item">
-                <div class="social-icon-box"><i class="ph ph-instagram-logo"></i></div>
-                <span class="social-handle">Instagram</span>
-            </a>
-            <a href="https://wa.me/918181823950" target="_blank" class="social-luxury-item">
-                <div class="social-icon-box"><i class="ph ph-whatsapp-logo"></i></div>
-                <span class="social-handle">WhatsApp</span>
-            </a>
-        </div>
-    </section>
+    </footer>
 
-
-
-
-    <!-- SEARCH OVERLAY -->
+    <!-- Overlay Components (Universal Template) -->
     <div class="search-overlay" id="search-overlay">
         <div class="search-overlay-backdrop"></div>
-        <div class="search-overlay-content">
-            <!-- Close Button -->
-            <button class="search-close" id="search-close" aria-label="Close Search">
-                <i class="ph ph-x"></i>
-            </button>
-
-            <!-- Search Header -->
-            <div class="search-header">
-                <div class="search-input-wrapper">
-                    <i class="ph ph-magnifying-glass search-icon"></i>
-                    <input type="text" id="search-input" class="search-input" placeholder="Search jewellery, collections..." autocomplete="off" autofocus>
-                    <button class="search-clear" id="search-clear" aria-label="Clear Search">
-                        <i class="ph ph-x-circle"></i>
-                    </button>
+        <div class="search-overlay-content" style="background: #fff; padding: 2rem;">
+            <button class="search-close" id="search-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
+            <div class="search-header" style="margin-bottom: 2rem;">
+                <div class="search-input-wrapper" style="display: flex; align-items: center; border: 1px solid rgba(0,0,0,0.1); padding: 1rem; border-radius: 10px;">
+                    <i class="ph ph-magnifying-glass search-icon" style="margin-right: 1rem;"></i>
+                    <input type="text" id="search-input" class="search-input" style="flex: 1; border: none; outline: none;" placeholder="Search treasures..." autocomplete="off">
                 </div>
             </div>
-
-            <!-- Search Body (scrollable) -->
             <div class="search-body" id="search-body">
-                
-                <!-- Default State: Trending + Categories -->
-                <div class="search-default" id="search-default">
-                    <div class="search-section">
-                        <h3 class="search-section-title">
-                            <i class="ph ph-trend-up"></i> Trending Searches
-                        </h3>
-                        <div class="trending-chips" id="trending-chips">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
-                    <div class="search-section">
-                        <h3 class="search-section-title">
-                            <i class="ph ph-squares-four"></i> Browse Categories
-                        </h3>
-                        <div class="search-categories" id="search-categories">
-                            <a href="/men.html" class="search-cat-card">
-                                <img src="/men_minimal_gold.png" alt="Men" class="search-cat-img">
-                                <div class="search-cat-info">
-                                    <span class="search-cat-name">Men</span>
-                                    <span class="search-cat-arrow"><i class="ph ph-arrow-right"></i></span>
-                                </div>
-                            </a>
-                            <a href="/wedding.html" class="search-cat-card">
-                                <img src="/wedding_collection.png" alt="Wedding" class="search-cat-img">
-                                <div class="search-cat-info">
-                                    <span class="search-cat-name">Wedding</span>
-                                    <span class="search-cat-arrow"><i class="ph ph-arrow-right"></i></span>
-                                </div>
-                            </a>
-                            <a href="/couple.html" class="search-cat-card">
-                                <img src="/couple_collection.png" alt="Couple" class="search-cat-img">
-                                <div class="search-cat-info">
-                                    <span class="search-cat-name">Couple</span>
-                                    <span class="search-cat-arrow"><i class="ph ph-arrow-right"></i></span>
-                                </div>
-                            </a>
-                            <a href="/women.html" class="search-cat-card">
-                                <img src="/women_collection.png" alt="Women" class="search-cat-img">
-                                <div class="search-cat-info">
-                                    <span class="search-cat-name">Women</span>
-                                    <span class="search-cat-arrow"><i class="ph ph-arrow-right"></i></span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Suggestions State -->
-                <div class="search-suggestions-panel" id="search-suggestions" style="display:none;">
-                    <h3 class="search-section-title">
-                        <i class="ph ph-sparkle"></i> Suggestions
-                    </h3>
-                    <ul class="suggestion-list" id="suggestion-list">
-                        <!-- Populated by JS -->
-                    </ul>
-                </div>
-
-                <!-- Results State -->
-                <div class="search-results-panel" id="search-results" style="display:none;">
-                    <div class="results-header">
-                        <span class="results-count" id="results-count"></span>
-                    </div>
-                    <div class="results-grid" id="results-grid">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-
-                <!-- No Results State -->
-                <div class="search-no-results" id="search-no-results" style="display:none;">
-                    <div class="no-results-icon">
-                        <i class="ph ph-magnifying-glass-minus"></i>
-                    </div>
-                    <h3>No results found</h3>
-                    <p>Try a different search term or browse our categories below</p>
-                </div>
+                <div class="search-suggestions-panel" id="search-suggestions" style="display:none;"><ul class="suggestion-list" id="suggestion-list"></ul></div>
+                <div class="search-results-panel" id="search-results" style="display:none;"><div class="results-grid" id="results-grid"></div></div>
             </div>
         </div>
     </div>
 
-    <!-- WISHLIST OVERLAY -->
+    <!-- Premium Wishlist Drawer -->
     <div class="wishlist-overlay" id="wishlist-overlay">
         <div class="wishlist-overlay-backdrop"></div>
         <div class="wishlist-overlay-content">
-            <button class="wishlist-close" id="wishlist-close" aria-label="Close Wishlist">
-                <i class="ph ph-x"></i>
-            </button>
-
-            <div class="wishlist-header">
-                <div class="wishlist-header-icon">
-                    <i class="ph-fill ph-heart"></i>
+            <div class="drawer-header">
+                <div>
+                    <h2 class="drawer-title">Curated Selection</h2>
+                    <p class="drawer-subtitle">Your Personal Gallery</p>
                 </div>
-                <h2 class="wishlist-title">Your Curated Collection</h2>
-                <p class="wishlist-subtitle">Pieces handpicked by you, crafted to perfection</p>
+                <button class="drawer-close" id="wishlist-close" aria-label="Close Wishlist">
+                    <i class="ph ph-x"></i>
+                </button>
             </div>
 
-            <div class="wishlist-body" id="wishlist-body">
+            <div class="drawer-body">
                 <!-- Empty State -->
-                <div class="wishlist-empty" id="wishlist-empty">
-                    <div class="wishlist-empty-icon">
-                        <i class="ph ph-heart"></i>
+                <div id="wishlist-empty" class="wishlist-empty">
+                    <div class="empty-icon-wrap">
+                        <i class="ph ph-hand-heart"></i>
                     </div>
-                    <h3>Your collection awaits</h3>
-                    <p>Tap the <i class="ph ph-heart"></i> on any piece that speaks to you</p>
+                    <h3>Your treasury is empty</h3>
+                    <p>Begin your journey by selecting pieces that speak to you.</p>
+                    <a href="/all-collections.html" class="browse-btn">Browse Collection</a>
                 </div>
 
-                <!-- Wishlist Items -->
-                <div class="wishlist-items" id="wishlist-items" style="display:none;">
-                    <div class="wishlist-grid" id="wishlist-grid"></div>
+                <!-- Items Container -->
+                <div id="wishlist-items" class="wishlist-items" style="display: none;">
+                    <div id="wishlist-grid"></div>
                 </div>
             </div>
 
-            <div class="wishlist-footer" id="wishlist-footer" style="display:none;">
-                <div class="wishlist-footer-info">
-                    <span id="wishlist-total-items">0 pieces</span>
-                    <span class="wishlist-dot">·</span>
-                    <span id="wishlist-total-weight">0g total weight</span>
+            <div class="drawer-footer" id="wishlist-footer" style="display: none;">
+                <div class="footer-stats">
+                    <div class="stat">
+                        <span class="label">Selection</span>
+                        <span class="value" id="wishlist-total-items">0 Pieces</span>
+                    </div>
+                    <div class="stat divider"></div>
+                    <div class="stat">
+                        <span class="label">Est. Weight</span>
+                        <span class="value" id="wishlist-total-weight">0.00g</span>
+                    </div>
                 </div>
-                <button class="wishlist-inquire-btn" id="wishlist-inquire">
-                    <i class="ph ph-whatsapp-logo"></i>
-                    Enquire on WhatsApp
+                
+                <button class="inquiry-btn gold-shimmer" id="wishlist-inquire">
+                    <div class="btn-content">
+                        <i class="ph ph-whatsapp-logo"></i>
+                        <span>Enquire on WhatsApp</span>
+                    </div>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Fly Heart Animation Element -->
-    <div class="fly-heart" id="fly-heart">
-        <i class="ph-fill ph-heart"></i>
-    </div>
-
-    <!-- PROFILE DRAWER -->
     <div class="profile-drawer-overlay" id="profile-drawer-overlay">
         <div class="profile-drawer-backdrop"></div>
-        <aside class="profile-drawer" id="profile-drawer">
-
-            <!-- Close -->
-            <button class="profile-close" id="profile-close" aria-label="Close Profile">
-                <i class="ph ph-x"></i>
-            </button>
-
-            <!-- ═══ GUEST STATE (Login Form) ═══ -->
-            <div class="profile-guest" id="profile-guest">
-                <div class="profile-hero">
-                    <div class="profile-avatar">
-                        <i class="ph ph-user"></i>
-                        <div class="avatar-ring"></div>
-                    </div>
-                    <h2 class="profile-name">Welcome</h2>
-                    <p class="profile-tagline">Sign in to your luxury experience</p>
+        <aside class="profile-drawer" style="background: #080e1c; color: #fff; width: min(400px, 100vw);">
+            <button class="profile-close" id="profile-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
+            <div class="profile-guest" id="profile-guest" style="padding: 3rem 2rem;">
+                <div class="profile-hero" style="text-align: center; margin-bottom: 3rem;">
+                    <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 0.5rem;">Welcome</h2>
+                    <p style="opacity: 0.6;">Sign in to your luxury experience</p>
                 </div>
-
                 <form class="profile-login-form" id="profile-login-form">
-                    <div class="form-group">
-                        <label class="form-label"><i class="ph ph-user"></i> Full Name</label>
-                        <input type="text" id="login-name" class="form-input" placeholder="e.g. Priya Sharma" required autocomplete="name">
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="text" id="login-name" class="profile-input" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px;" placeholder="Full Name" required>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label"><i class="ph ph-phone"></i> Phone Number</label>
-                        <div class="phone-input-wrap">
-                            <span class="phone-prefix">+91</span>
-                            <input type="tel" id="login-phone" class="form-input phone-input" placeholder="81818 23950" required maxlength="10" pattern="[0-9]{10}" autocomplete="tel">
-                        </div>
+                    <div style="margin-bottom: 2rem;">
+                        <input type="tel" id="login-phone" class="profile-input" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px;" placeholder="Phone Number" required>
                     </div>
-                    <div class="form-error" id="login-error"></div>
-                    <button type="submit" class="profile-login-btn" id="login-submit-btn">
-                        <span class="btn-text">Continue</span>
-                        <span class="btn-loader" style="display:none;"><i class="ph ph-spinner"></i></span>
-                    </button>
-                    <p class="login-note"><i class="ph ph-shield-check"></i> Your info is safe &amp; never shared</p>
+                    <button type="submit" class="profile-submit-btn" id="login-submit-btn" style="width: 100%; padding: 1.2rem; background: var(--warm-gold); color: #000; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">Continue</button>
                 </form>
-
-                <div class="profile-store-card">
-                    <div class="store-card-glow"></div>
-                    <div class="store-card-content">
-                        <div class="store-card-icon">
-                            <img src="/logo.bg.png" alt="Gayatri Jewellers" class="store-card-logo">
-                        </div>
-                        <div class="store-card-info">
-                            <h4>Gayatri Jewellers</h4>
-                            <p><i class="ph ph-map-pin"></i> Pundlik Nagar Rd, CSN</p>
-                        </div>
-                    </div>
-                    <a href="tel:+918181823950" class="store-call-btn">
-                        <i class="ph ph-phone"></i> Call Store
-                    </a>
-                </div>
             </div>
-
-            <!-- ═══ LOGGED IN STATE ═══ -->
-            <div class="profile-logged" id="profile-logged" style="display:none;">
-                <div class="profile-hero">
-                    <div class="profile-avatar logged-in">
-                        <span class="avatar-initial" id="avatar-initial">G</span>
-                        <div class="avatar-ring"></div>
-                    </div>
-                    <h2 class="profile-name" id="profile-display-name">Guest</h2>
-                    <p class="profile-tagline" id="profile-display-phone">+91 XXXXX XXXXX</p>
-
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <span class="stat-value" id="profile-wishlist-count">0</span>
-                            <span class="stat-label">Wishlist</span>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat-item">
-                            <span class="stat-value">4</span>
-                            <span class="stat-label">Categories</span>
-                        </div>
-                        <div class="stat-divider"></div>
-                        <div class="stat-item">
-                            <span class="stat-value">25+</span>
-                            <span class="stat-label">Yrs Trust</span>
-                        </div>
-                    </div>
+            <div class="profile-logged" id="profile-logged" style="display:none; padding: 3rem 2rem;">
+                <div class="profile-hero" style="text-align: center; margin-bottom: 3rem;">
+                    <div class="profile-avatar logged-in" style="width: 80px; height: 80px; background: var(--warm-gold); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem; font-weight: 700;"><span id="avatar-initial">G</span></div>
+                    <h2 id="profile-display-name" style="font-family: 'Cinzel', serif;">Guest</h2>
+                    <p id="profile-display-phone" style="opacity: 0.6;">+91 XXXXX XXXXX</p>
                 </div>
-
-                <nav class="profile-nav">
-                    <a href="#hero" class="profile-nav-item" data-profile-nav>
-                        <div class="nav-icon-wrap"><i class="ph ph-house"></i></div>
-                        <span>Home</span>
-                        <i class="ph ph-caret-right nav-arrow"></i>
-                    </a>
-                    <a href="#collections" class="profile-nav-item" data-profile-nav>
-                        <div class="nav-icon-wrap"><i class="ph ph-diamond"></i></div>
-                        <span>Collections</span>
-                        <i class="ph ph-caret-right nav-arrow"></i>
-                    </a>
-                    <a href="#gold-rate" class="profile-nav-item" data-profile-nav>
-                        <div class="nav-icon-wrap"><i class="ph ph-chart-line-up"></i></div>
-                        <span>Gold Rate</span>
-                        <i class="ph ph-caret-right nav-arrow"></i>
-                    </a>
-                    <button class="profile-nav-item" id="profile-open-wishlist">
-                        <div class="nav-icon-wrap"><i class="ph ph-hand-heart"></i></div>
-                        <span>My Treasury</span>
-                        <i class="ph ph-caret-right nav-arrow"></i>
-                    </button>
-                    <a href="#about" class="profile-nav-item" data-profile-nav>
-                        <div class="nav-icon-wrap"><i class="ph ph-info"></i></div>
-                        <span>About Us</span>
-                        <i class="ph ph-caret-right nav-arrow"></i>
-                    </a>
-                    <a href="#store-tour" class="profile-nav-item" data-profile-nav>
-                        <div class="nav-icon-wrap"><i class="ph ph-storefront"></i></div>
-                        <span>Our Store</span>
-                        <i class="ph ph-caret-right nav-arrow"></i>
-                    </a>
+                <nav class="profile-nav" style="display: flex; flex-direction: column; gap: 15px;">
+                    <button class="dashboard-nav-item" id="profile-open-wishlist" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px; cursor: pointer; text-align: left;"><i class="ph ph-heart"></i> My Treasury</button>
+                    <button class="dashboard-nav-item" id="profile-logout" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px; cursor: pointer; text-align: left;"><i class="ph ph-sign-out"></i> Logout</button>
                 </nav>
-
-                <div class="profile-prefs">
-                    <div class="pref-item">
-                        <div class="pref-info">
-                            <i class="ph ph-bell-ringing"></i>
-                            <span>Gold Rate Alerts</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="pref-goldrate" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    <div class="pref-item">
-                        <div class="pref-info">
-                            <i class="ph ph-gift"></i>
-                            <span>Offers &amp; New Arrivals</span>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="pref-offers" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="profile-store-card">
-                    <div class="store-card-glow"></div>
-                    <div class="store-card-content">
-                        <div class="store-card-icon">
-                            <img src="/logo.bg.png" alt="Gayatri Jewellers" class="store-card-logo">
-                        </div>
-                        <div class="store-card-info">
-                            <h4>Gayatri Jewellers</h4>
-                            <p><i class="ph ph-map-pin"></i> Pundlik Nagar Rd, CSN</p>
-                            <p><i class="ph ph-clock"></i> Mon–Sat: 10 AM – 8 PM</p>
-                        </div>
-                    </div>
-                    <a href="tel:+918181823950" class="store-call-btn">
-                        <i class="ph ph-phone"></i> Call Store
-                    </a>
-                </div>
-
-                <div class="profile-social">
-                    <a href="https://www.instagram.com/gayatri.jewellers?igsh=aGw2dmVjdHU5b3Vv" target="_blank" class="social-circle" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
-                    <a href="https://wa.me/918181823950" target="_blank" class="social-circle whatsapp" aria-label="WhatsApp"><i class="ph ph-whatsapp-logo"></i></a>
-                </div>
-
-                <button class="profile-logout-btn" id="profile-logout">
-                    <i class="ph ph-sign-out"></i> Sign Out
-                </button>
-
-                <p class="profile-copyright">&copy; 2026 Gayatri Jewellers</p>
             </div>
         </aside>
     </div>
 
+    <div class="fly-heart" id="fly-heart" style="position: fixed; display: none; z-index: 10002; color: var(--warm-gold); font-size: 2rem; pointer-events: none;"><i class="ph-fill ph-heart"></i></div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="/supabase-config.js"></script>
     <script src="/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { const p = document.getElementById('preloader'); if(p) { p.style.opacity = '0'; setTimeout(() => p.style.display = 'none', 800); } }, 1500); });
+        // Hover state for Category Cards
+        document.querySelectorAll('.collection-card').forEach(card => {
+            card.addEventListener('mouseenter', () => card.querySelector('.col-arrow').style.transform = 'translateX(10px)');
+            card.addEventListener('mouseleave', () => card.querySelector('.col-arrow').style.transform = 'translateX(0)');
+        });
+    </script>
 </body>
-
 </html>

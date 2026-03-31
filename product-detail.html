@@ -72,8 +72,7 @@
                             <span class="attr-val" id="detail-weight" style="font-weight: 700;">0.00g</span>
                         </div>
                         <div class="attr-box" style="background: #f9f9f9; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #eee;">
-                            <span class="attr-label" style="display: block; font-size: 0.7rem; opacity: 0.6; text-transform: uppercase;">Stock</span>
-                            <span class="attr-val" style="font-weight: 700; color: #2ecc71;">In Store</span>
+                            <span class="attr-label" style="font-weight: 700; color: #2ecc71;">In Store</span>
                         </div>
                     </div>
 
@@ -129,33 +128,64 @@
         </div>
     </div>
 
+    <!-- Premium Wishlist Drawer -->
     <div class="wishlist-overlay" id="wishlist-overlay">
         <div class="wishlist-overlay-backdrop"></div>
-        <div class="wishlist-overlay-content" style="background: #fff;">
-            <button class="wishlist-close" id="wishlist-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
-            <div class="wishlist-header" style="padding: 2rem;"><h2 class="wishlist-title">Your Treasury</h2></div>
-            <div class="wishlist-body" style="padding: 2rem;"><div class="wishlist-grid" id="wishlist-grid"></div></div>
-            <div class="wishlist-footer" style="padding: 2rem;"><div id="wishlist-total-items">0 pieces</div><button class="enquire-master-btn" style="width: 100%; padding: 1rem; background: #25D366; color: #fff; border-radius: 10px;"><i class="ph ph-whatsapp-logo"></i> Enquire</button></div>
+        <div class="wishlist-overlay-content">
+            <div class="drawer-header">
+                <div>
+                    <h2 class="drawer-title">Curated Selection</h2>
+                    <p class="drawer-subtitle">Your Personal Gallery</p>
+                </div>
+                <button class="drawer-close" id="wishlist-close" aria-label="Close Wishlist">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <div class="drawer-body">
+                <!-- Empty State -->
+                <div id="wishlist-empty" class="wishlist-empty">
+                    <div class="empty-icon-wrap">
+                        <i class="ph ph-hand-heart"></i>
+                    </div>
+                    <h3>Your treasury is empty</h3>
+                    <p>Begin your journey by selecting pieces that speak to you.</p>
+                    <a href="/all-collections.html" class="browse-btn">Browse Collection</a>
+                </div>
+
+                <!-- Items Container -->
+                <div id="wishlist-items" class="wishlist-items" style="display: none;">
+                    <div id="wishlist-grid"></div>
+                </div>
+            </div>
+
+            <div class="drawer-footer" id="wishlist-footer" style="display: none;">
+                <div class="footer-stats">
+                    <div class="stat">
+                        <span class="label">Selection</span>
+                        <span class="value" id="wishlist-total-items">0 Pieces</span>
+                    </div>
+                    <div class="stat divider"></div>
+                    <div class="stat">
+                        <span class="label">Est. Weight</span>
+                        <span class="value" id="wishlist-total-weight">0.00g</span>
+                    </div>
+                </div>
+                
+                <button class="inquiry-btn gold-shimmer" id="wishlist-inquire">
+                    <div class="btn-content">
+                        <i class="ph ph-whatsapp-logo"></i>
+                        <span>Enquire on WhatsApp</span>
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 
     <div class="profile-drawer-overlay" id="profile-drawer-overlay">
         <div class="profile-drawer-backdrop"></div>
-        <aside class="profile-drawer" style="background: #080e1c; color: #fff; width: min(400px, 100vw);">
-            <button class="profile-close" id="profile-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
-            <div class="profile-guest" id="profile-guest" style="padding: 2rem;">
-                <h2 style="text-align: center; margin-bottom: 2rem;">Welcome</h2>
-                <form id="profile-login-form">
-                    <input type="text" id="login-name" class="profile-input" style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;" placeholder="Full Name" required>
-                    <input type="tel" id="login-phone" class="profile-input" style="width: 100%; padding: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;" placeholder="Phone Number" required>
-                    <button type="submit" id="login-submit-btn" style="width: 100%; padding: 1rem; background: var(--warm-gold); color: #000; border-radius: 10px; font-weight: 700;">Continue</button>
-                </form>
-            </div>
-            <div class="profile-logged" id="profile-logged" style="display:none; padding: 2rem;">
-                <div style="text-align: center; margin-bottom: 2rem;"><div style="width: 60px; height: 60px; background: var(--warm-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #000; font-weight: 700;"><span id="avatar-initial">G</span></div><h2 id="profile-display-name">Guest</h2></div>
-                <button id="profile-open-wishlist" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); color: #fff; border-radius: 10px; text-align: left; margin-bottom: 1rem;"><i class="ph ph-heart"></i> My Treasury</button>
-                <button id="profile-logout" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); color: #fff; border-radius: 10px; text-align: left;"><i class="ph ph-sign-out"></i> Logout</button>
-            </div>
+        <aside class="profile-drawer">
+            <button class="profile-close" id="profile-close"><i class="ph ph-x"></i></button>
         </aside>
     </div>
 
@@ -164,37 +194,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="/supabase-config.js"></script>
     <script src="/script.js"></script>
-    <script>
-        // Page specific logic (already robust in script.js but keeping sync)
-        document.addEventListener('DOMContentLoaded', async () => {
-             const getProduct = async () => {
-                const params = new URLSearchParams(window.location.search);
-                const productId = params.get('id');
-                if (!productId) return null;
-                
-                const products = window.GLOBAL_PRODUCTS || [];
-                return products.find(p => p.id === productId);
-             };
-
-             const product = await getProduct();
-             if (product) {
-                const wishBtn = document.getElementById('detail-wish-btn');
-                const updateBtn = (isIn) => {
-                    wishBtn.innerHTML = isIn ? '<i class="ph-fill ph-heart"></i> Remove from Wishlist' : '<i class="ph ph-heart"></i> Add to Wishlist';
-                    if (isIn) wishBtn.classList.add('active');
-                    else wishBtn.classList.remove('active');
-                };
-                
-                const wishlist = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
-                updateBtn(wishlist.some(i => i.id === product.id));
-
-                wishBtn.onclick = () => {
-                    window.toggleWishlist(product.id);
-                    const freshWishlist = JSON.parse(localStorage.getItem('gj_wishlist') || '[]');
-                    updateBtn(freshWishlist.some(i => i.id === product.id));
-                };
-             }
-        });
-    </script>
 </body>
 </html>
