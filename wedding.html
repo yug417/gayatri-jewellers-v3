@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Gallery | Gayatri Jewellers</title>
+    <title>Wedding Collection | Gayatri Jewellers</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
-<body class="collection-page" data-category="wedding">
-    <!-- Navbar -->
+<body data-category="wedding">
+
     <nav class="navbar scrolled" id="navbar">
         <div class="nav-left">
             <a href="/index.html" class="logo" style="display: flex; align-items: center; gap: 15px; text-decoration: none;">
@@ -37,65 +37,39 @@
         </div>
     </nav>
 
-    <!-- Sub-Search Header -->
-    <header class="collection-search-header">
-        <div class="sub-search-box">
-            <i class="ph ph-magnifying-glass"></i>
-            <input type="text" placeholder="Search within Wedding Gallery..." class="sub-search-input" id="collection-search">
+    <header class="collection-hero" style="height: 60vh; background: #000; position: relative; overflow: hidden; display: flex; align-items: center; padding: 0 8%;">
+        <img src="https://images.unsplash.com/photo-1599643478514-4a1101859187" alt="Wedding" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;">
+        <div style="position: relative; z-index: 10; color: #fff;">
+            <span style="font-size: 0.8rem; letter-spacing: 5px; color: var(--warm-gold); text-transform: uppercase;">A Royal Beginning</span>
+            <h1 style="font-family: 'Cinzel', serif; font-size: clamp(3rem, 6vw, 5rem); margin: 1rem 0;">Wedding Collection</h1>
+            <p style="max-width: 600px; opacity: 0.7;">Opulent bridal masterpieces crafted with heritage and precision for your most precious moments.</p>
         </div>
     </header>
 
-    <!-- Collection Hero -->
-    <section class="collection-hero-v2">
-        <div class="collection-hero-bg" style="background-image: url('/wedding_hero.png');"></div>
-        <div class="collection-hero-overlay"></div>
-        <div class="hero-v2-content">
-            <h1>The Bridal Gallery</h1>
-            <p>Ethereal grace for your forever. Discover bespoke wedding masterpieces crafted for royalty.</p>
-        </div>
-    </section>
-
-    <!-- Filter Section (Circles) -->
-    <section class="collection-filter-section">
-        <div class="filter-circles-container">
-            <div class="filter-circle-item active" data-filter="all">
-                <div class="circle-icon"><img src="/filter_all_gold_1774681345177.png" alt="All"></div>
-                <span class="circle-label">All</span>
-            </div>
-            <div class="filter-circle-item" data-filter="Necklace Set">
-                <div class="circle-icon"><img src="/filter_bridal_gold_1774681269431.png" alt="Sets"></div>
-                <span class="circle-label">Bridal Sets</span>
-            </div>
-            <div class="filter-circle-item" data-filter="Mangalsutra">
-                <div class="circle-icon"><img src="/filter_mangalsutra_gold.png" alt="Mangalsutra"></div>
-                <span class="circle-label">Mangalsutra</span>
-            </div>
-            <div class="filter-circle-item" data-filter="Bangles">
-                <div class="circle-icon"><img src="/filter_kada_gold_1774681324265.png" alt="Bangles"></div>
-                <span class="circle-label">Bangles</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Results Info -->
-    <div class="collection-results-info">
-        <div class="grid-info-count">Showing <span id="count-display">0</span> premium pieces</div>
-        <div class="grid-info-sort"><span style="opacity: 0.6;">Sort by:</span> <strong>New Arrivals</strong></div>
+    <div class="filter-bar" style="padding: 20px 5%; background: #fff; display: flex; justify-content: center; gap: 30px; border-bottom: 1px solid #eee;">
+        <div class="filter-circle-item active" data-filter="all">All Pieces</div>
+        <div class="filter-circle-item" data-filter="necklace">Necklace Sets</div>
+        <div class="filter-circle-item" data-filter="bangles">Bangles</div>
+        <div class="filter-circle-item" data-filter="earrings">Earrings</div>
     </div>
 
-    <!-- Collection Grid -->
-    <section class="collection-grid-v2" id="collection-grid" style="min-height: 400px;"></section>
+    <main style="padding: 60px 5%;">
+        <div class="collection-status" style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+            <p style="opacity: 0.6; font-size: 0.9rem;">Showing <span id="count-display" style="color: var(--warm-gold); font-weight: 700;">0</span> Artisanal Pieces</p>
+        </div>
+        <div class="collection-grid-v2" id="collection-grid">
+            <!-- Products loaded by script.js -->
+        </div>
+    </main>
 
-    <footer class="footer"><div class="footer-bottom"><p>&copy; 2026 Gayatri Jewellers. All rights reserved.</p></div></footer>
-
-    <!-- Overlay Components (Universal) -->
+    <!-- Overlays -->
     <div class="search-overlay" id="search-overlay">
         <div class="search-overlay-backdrop"></div>
         <div class="search-overlay-content" style="background: #fff; padding: 2rem;">
-            <button class="search-close" id="search-close"><i class="ph ph-x"></i></button>
+            <button class="search-close" id="search-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
             <div class="search-header" style="margin-bottom: 2rem;">
                 <div class="search-input-wrapper" style="display: flex; align-items: center; border: 1px solid rgba(0,0,0,0.1); padding: 1rem; border-radius: 10px;">
-                    <i class="ph ph-magnifying-glass search-icon"></i>
+                    <i class="ph ph-magnifying-glass search-icon" style="margin-right: 1rem;"></i>
                     <input type="text" id="search-input" class="search-input" style="flex: 1; border: none; outline: none;" placeholder="Search treasures..." autocomplete="off">
                 </div>
             </div>
@@ -106,38 +80,96 @@
         </div>
     </div>
 
+    <!-- Premium Wishlist Drawer -->
     <div class="wishlist-overlay" id="wishlist-overlay">
         <div class="wishlist-overlay-backdrop"></div>
-        <div class="wishlist-overlay-content" style="background: #fff;">
-            <button class="wishlist-close" id="wishlist-close"><i class="ph ph-x"></i></button>
-            <div class="wishlist-header" style="padding: 2rem;"><h2 class="wishlist-title">Your Treasury</h2></div>
-            <div class="wishlist-body" style="padding: 2rem;"><div class="wishlist-grid" id="wishlist-grid"></div></div>
-            <div class="wishlist-footer" style="padding: 2rem;"><div id="wishlist-total-items">0 pieces</div><button class="enquire-master-btn" style="width: 100%; padding: 1rem; background: #25D366; color: #fff; border-radius: 10px;"><i class="ph ph-whatsapp-logo"></i> Enquire</button></div>
+        <div class="wishlist-overlay-content">
+            <div class="drawer-header">
+                <div>
+                    <h2 class="drawer-title">Curated Selection</h2>
+                    <p class="drawer-subtitle">Your Personal Gallery</p>
+                </div>
+                <button class="drawer-close" id="wishlist-close" aria-label="Close Wishlist">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+
+            <div class="drawer-body">
+                <!-- Empty State -->
+                <div id="wishlist-empty" class="wishlist-empty">
+                    <div class="empty-icon-wrap">
+                        <i class="ph ph-hand-heart"></i>
+                    </div>
+                    <h3>Your treasury is empty</h3>
+                    <p>Begin your journey by selecting pieces that speak to you.</p>
+                    <a href="/all-collections.html" class="browse-btn">Browse Collection</a>
+                </div>
+
+                <!-- Items Container -->
+                <div id="wishlist-items" class="wishlist-items" style="display: none;">
+                    <div id="wishlist-grid"></div>
+                </div>
+            </div>
+
+            <div class="drawer-footer" id="wishlist-footer" style="display: none;">
+                <div class="footer-stats">
+                    <div class="stat">
+                        <span class="label">Selection</span>
+                        <span class="value" id="wishlist-total-items">0 Pieces</span>
+                    </div>
+                    <div class="stat divider"></div>
+                    <div class="stat">
+                        <span class="label">Est. Weight</span>
+                        <span class="value" id="wishlist-total-weight">0.00g</span>
+                    </div>
+                </div>
+                
+                <button class="inquiry-btn gold-shimmer" id="wishlist-inquire">
+                    <div class="btn-content">
+                        <i class="ph ph-whatsapp-logo"></i>
+                        <span>Enquire on WhatsApp</span>
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 
     <div class="profile-drawer-overlay" id="profile-drawer-overlay">
         <div class="profile-drawer-backdrop"></div>
         <aside class="profile-drawer" style="background: #080e1c; color: #fff; width: min(400px, 100vw);">
-            <button class="profile-close" id="profile-close"><i class="ph ph-x"></i></button>
-            <div class="profile-guest" id="profile-guest" style="padding: 2rem;">
-                <h2 style="text-align: center; margin-bottom: 2rem;">Welcome</h2>
-                <form id="profile-login-form">
-                    <input type="text" id="login-name" class="profile-input" style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;" placeholder="Full Name" required>
-                    <input type="tel" id="login-phone" class="profile-input" style="width: 100%; padding: 1rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;" placeholder="Phone Number" required>
-                    <button type="submit" id="login-submit-btn" style="width: 100%; padding: 1rem; background: var(--warm-gold); color: #000; border-radius: 10px; font-weight: 700;">Continue</button>
+            <button class="profile-close" id="profile-close" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="ph ph-x"></i></button>
+            <div class="profile-guest" id="profile-guest" style="padding: 3rem 2rem;">
+                <div class="profile-hero" style="text-align: center; margin-bottom: 3rem;">
+                    <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 0.5rem;">Welcome</h2>
+                    <p style="opacity: 0.6;">Sign in to your luxury experience</p>
+                </div>
+                <form class="profile-login-form" id="profile-login-form">
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="text" id="login-name" class="profile-input" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px;" placeholder="Full Name" required>
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <input type="tel" id="login-phone" class="profile-input" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px;" placeholder="Phone Number" required>
+                    </div>
+                    <button type="submit" class="profile-submit-btn" id="login-submit-btn" style="width: 100%; padding: 1.2rem; background: var(--warm-gold); color: #000; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">Continue</button>
                 </form>
             </div>
-            <div class="profile-logged" id="profile-logged" style="display:none; padding: 2rem;">
-                <div style="text-align: center; margin-bottom: 2rem;"><div style="width: 60px; height: 60px; background: var(--warm-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: #000; font-weight: 700;"><span id="avatar-initial">G</span></div><h2 id="profile-display-name">Guest</h2></div>
-                <button id="profile-open-wishlist" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); color: #fff; border-radius: 10px; text-align: left; margin-bottom: 1rem;"><i class="ph ph-heart"></i> My Treasury</button>
-                <button id="profile-logout" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); color: #fff; border-radius: 10px; text-align: left;"><i class="ph ph-sign-out"></i> Logout</button>
+            <div class="profile-logged" id="profile-logged" style="display:none; padding: 3rem 2rem;">
+                <div class="profile-hero" style="text-align: center; margin-bottom: 3rem;">
+                    <div class="profile-avatar logged-in" style="width: 80px; height: 80px; background: var(--warm-gold); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.5rem; font-weight: 700;"><span id="avatar-initial">G</span></div>
+                    <h2 id="profile-display-name" style="font-family: 'Cinzel', serif;">Guest</h2>
+                    <p id="profile-display-phone" style="opacity: 0.6;">+91 XXXXX XXXXX</p>
+                </div>
+                <nav class="profile-nav" style="display: flex; flex-direction: column; gap: 15px;">
+                    <button class="dashboard-nav-item" id="profile-open-wishlist" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px; cursor: pointer; text-align: left;"><i class="ph ph-heart"></i> My Treasury</button>
+                    <button class="dashboard-nav-item" id="profile-logout" style="width: 100%; padding: 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 12px; cursor: pointer; text-align: left;"><i class="ph ph-sign-out"></i> Logout</button>
+                </nav>
             </div>
         </aside>
     </div>
 
-    <div class="fly-heart" id="fly-heart" style="position: fixed; display: none; z-index: 10002; color: var(--warm-gold); font-size: 2rem;"><i class="ph-fill ph-heart"></i></div>
+    <div class="fly-heart" id="fly-heart" style="position: fixed; display: none; z-index: 10002; color: var(--warm-gold); font-size: 2rem; pointer-events: none;"><i class="ph-fill ph-heart"></i></div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="/supabase-config.js"></script>
     <script src="/script.js"></script>
